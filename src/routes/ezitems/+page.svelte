@@ -3,10 +3,30 @@
   import { Input } from '$lib/components/ui/input'
   import { Label } from '$lib/components/ui/label'
   import ItemManager from './components/ItemManager.svelte'
+  import Autocomplete from '$lib/components/ui/autocomplete/Autocomplete.svelte'
+  import { onMount } from 'svelte'
+  import type { searchItem } from '@/index.js'
+  import { randDrinks } from '@ngneat/falso'
 
   function downloadFile() {
     console.log('hi')
   }
+
+  const items: Array<searchItem> = []
+  let idx = 0
+  onMount(() => {
+    for (let i = 0; i < 100; i++) {
+      const data = randDrinks()
+      items.push({
+        label: data,
+        value: idx
+      })
+
+      idx++
+    }
+
+    console.log(items)
+  })
 </script>
 
 <div class="flex h-full justify-center pb-8 pt-8">
@@ -25,6 +45,10 @@
       <Label for="email">Folder Name</Label>
       <Input class="h-12 lg:h-10" type="email" id="email" placeholder="Folder that the mod is in" />
     </div>
+
+    <span class="mt-4">
+      <Autocomplete data={items} />
+    </span>
 
     <ItemManager />
   </div>
