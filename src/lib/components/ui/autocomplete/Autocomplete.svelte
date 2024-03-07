@@ -1,5 +1,6 @@
 <script lang="ts">
   import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down'
+  import Search from 'lucide-svelte/icons/search'
   import * as Command from '$lib/components/ui/command'
   import * as Popover from '$lib/components/ui/popover'
   import { Button } from '$lib/components/ui/button'
@@ -11,6 +12,7 @@
   export let searchText = 'Search items'
   export let emptyText = 'No items found'
   export let data: Array<searchItem> = []
+  export let mode: 'single' | 'many' = 'single'
 
   // TODO fix repeating items (?)
   // TODO search algorithm config
@@ -19,17 +21,13 @@
   let itemsShown: Array<searchItem> = data.slice(0, 10)
 
   let open = false
-  let value = ''
+  let selectedItem = ''
 
   function closeAndFocusTrigger(triggerId: string) {
     open = false
     tick().then(() => {
       document.getElementById(triggerId)?.focus()
     })
-  }
-
-  $: if (value) {
-    console.log(value)
   }
 
   let rawValue = ''
@@ -41,11 +39,14 @@
     return fuse.search(rawValue)
   }
 
+  // TODO max items shown
   function handleInput() {
     itemsShown = searchItems()
       .map((res) => res.item)
       .slice(0, 10)
   }
+
+  $: textCheck = mode === 'single' ? selectedItem : rawValue
 </script>
 
 <Popover.Root bind:open let:ids>
@@ -57,8 +58,12 @@
       aria-expanded={open}
       class="w-[200px] justify-between"
     >
-      {rawValue === '' ? defaultText : rawValue}
-      <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      {textCheck === '' ? defaultText : textCheck}
+      {#if mode === 'single'}
+        <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      {:else}
+        <Search class="ml-2 h-4 w-4 shrink-0 opacity-50" />
+      {/if}
     </Button>
   </Popover.Trigger>
   <Popover.Content class="w-[200px] p-0">
@@ -70,7 +75,7 @@
           <Command.Item
             value={item.label}
             onSelect={(currentValue) => {
-              value = currentValue
+              selectedItem = currentValue
               closeAndFocusTrigger(ids.trigger)
             }}
           >

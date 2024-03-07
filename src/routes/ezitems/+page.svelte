@@ -47,7 +47,7 @@
     </div>
 
     <span class="mt-4">
-      <Autocomplete data={items} />
+      <Autocomplete data={items} mode="many" />
     </span>
 
     <ItemManager />
