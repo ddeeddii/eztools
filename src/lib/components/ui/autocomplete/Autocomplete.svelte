@@ -14,6 +14,8 @@
   export let data: Array<searchItem> = []
   export let mode: 'single' | 'many' = 'single'
 
+  let className = ''
+  export { className as class }
   // TODO fix repeating items (?)
   // TODO search algorithm config
   // -> fuzzy search
@@ -56,9 +58,11 @@
       variant="outline"
       role="combobox"
       aria-expanded={open}
-      class="w-[200px] justify-between"
+      class="justify-between"
     >
-      {textCheck === '' ? defaultText : textCheck}
+      <span class="font-normal opacity-50">
+        {textCheck === '' ? defaultText : textCheck}
+      </span>
       {#if mode === 'single'}
         <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
       {:else}
@@ -66,7 +70,7 @@
       {/if}
     </Button>
   </Popover.Trigger>
-  <Popover.Content class="w-[200px] p-0">
+  <Popover.Content class={className}>
     <Command.Root shouldFilter={false}>
       <Command.Input placeholder={searchText} bind:value={rawValue} on:input={handleInput} />
       <Command.Empty>{emptyText}</Command.Empty>

@@ -1,35 +1,41 @@
 <script lang="ts">
   import * as Collapsible from '$lib/components/ui/collapsible'
-  import { Button } from '$lib/components/ui/button'
   import { Input } from '$lib/components/ui/input'
   import { Label } from '$lib/components/ui/label'
+  import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
+
+  let autocompleteDivWitdh = 0
+  let windowWidth = 0
 </script>
+
+<svelte:window bind:innerWidth={windowWidth} />
 
 <Collapsible.Root class="my-4 w-full rounded-sm border shadow-sm">
   <Collapsible.Trigger class="mx-4 flex h-16 w-full items-center justify-start">
     <div class="text-2xl">[Item] Unset -> Unset</div>
   </Collapsible.Trigger>
   <Collapsible.Content class="mx-4 mb-4">
-    <div class="grid grid-cols-2 grid-rows-2">
-      <div class="mb-4 flex w-full max-w-lg flex-col gap-1.5">
-        <Label for="email">Item Name</Label>
-        <Input class="h-12 lg:h-10" type="email" id="email" placeholder="New name " />
+    <div class="grid grid-cols-1 grid-rows-4 sm:grid-cols-2 sm:grid-rows-2">
+      <div class="mb-4 flex w-full max-w-lg flex-col gap-1.5 sm:px-4">
+        <Label for="item name">Item Name</Label>
+        <Input class="h-12 lg:h-10" type="text" id="item name" placeholder="New name " />
       </div>
 
       <div class="flex w-full max-w-lg flex-col gap-1.5">
-        <Label for="email">Item Description</Label>
-        <Input class="h-12 lg:h-10" type="email" id="email" placeholder="New description" />
-      </div>
-
-      <!-- TODO: autocomplete -->
-      <div class="flex w-full max-w-lg flex-col gap-1.5">
-        <Label for="email">Origin Item</Label>
+        <Label for="item description">Item Description</Label>
         <Input
           class="h-12 lg:h-10"
-          type="email"
-          id="email"
-          placeholder="Item whose name you want to change"
+          type="text"
+          id="item description"
+          placeholder="New description"
         />
+      </div>
+
+      <div class="w-full max-w-lg sm:px-4">
+        <div class="flex flex-col gap-1.5" bind:clientWidth={autocompleteDivWitdh}>
+          <Label for="email">Origin Item</Label>
+          <Autocomplete mode="single" class="w-full p-0" />
+        </div>
       </div>
 
       <!-- TODO: sprite name shown -->

@@ -3,7 +3,6 @@
   import { Input } from '$lib/components/ui/input'
   import { Label } from '$lib/components/ui/label'
   import ItemManager from './components/ItemManager.svelte'
-  import Autocomplete from '$lib/components/ui/autocomplete/Autocomplete.svelte'
   import { onMount } from 'svelte'
   import type { searchItem } from '@/index.js'
   import { randDrinks } from '@ngneat/falso'
@@ -37,18 +36,19 @@
     <Button class="mt-2" variant="outline">Menu</Button>
 
     <div class="mt-12 flex w-full max-w-lg flex-col gap-1.5 px-4">
-      <Label for="email">Mod Name</Label>
-      <Input class="h-12 lg:h-10" type="email" id="email" placeholder="Internal mod name" />
+      <Label for="mod name">Mod Name</Label>
+      <Input class="h-12 lg:h-10" type="text" id="mod name" placeholder="Internal mod name" />
     </div>
 
     <div class="mt-4 flex w-full max-w-lg flex-col gap-1.5 px-4">
-      <Label for="email">Folder Name</Label>
-      <Input class="h-12 lg:h-10" type="email" id="email" placeholder="Folder that the mod is in" />
+      <Label for="folder name">Folder Name</Label>
+      <Input
+        class="h-12 lg:h-10"
+        type="text"
+        id="folder name"
+        placeholder="Folder that the mod is in"
+      />
     </div>
-
-    <span class="mt-4">
-      <Autocomplete data={items} mode="many" />
-    </span>
 
     <ItemManager />
   </div>
