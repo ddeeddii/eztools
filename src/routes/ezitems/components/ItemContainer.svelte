@@ -3,6 +3,7 @@
   import { Input } from '$lib/components/ui/input'
   import { Label } from '$lib/components/ui/label'
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
+  import ImageInput from '@/components/ui/image-input/ImageInput.svelte'
 
   let autocompleteDivWitdh = 0
   let windowWidth = 0
@@ -38,11 +39,9 @@
         </div>
       </div>
 
-      <!-- TODO: sprite name shown -->
-      <!-- TODO: sprite preview -->
       <div class="flex w-full max-w-lg flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
-        <Input id="picture" type="file" />
+        <ImageInput uid="1" imageUrl={'preview'} />
       </div>
     </div>
   </Collapsible.Content>
