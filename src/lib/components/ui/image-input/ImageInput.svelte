@@ -9,6 +9,9 @@
   export let imageUrl: string
   export let defaultText = 'No image selected'
 
+  let className = ''
+  export { className as class }
+
   let inputText = defaultText
   let inputElement: HTMLInputElement
   let imgElement: HTMLElement
@@ -58,7 +61,8 @@
 <div class="flex">
   <Label
     for={`sprite-input-${uid}`}
-    class="flex h-10 w-full cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm font-normal"
+    class={'flex h-10 w-full cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm font-normal ' +
+      className}
   >
     {#if files && files.length > 0}
       <span class="flex-shrink-0 pr-3">

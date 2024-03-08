@@ -14,8 +14,8 @@
   export let data: Array<searchItem> = []
   export let mode: 'single' | 'many' = 'single'
 
-  let className = ''
-  export { className as class }
+  export let popoverClass = ''
+  export let triggerClass = ''
   // TODO fix repeating items (?)
   // TODO search algorithm config
   // -> fuzzy search
@@ -58,7 +58,7 @@
       variant="outline"
       role="combobox"
       aria-expanded={open}
-      class="justify-between"
+      class={'justify-between ' + triggerClass}
     >
       <span class="font-normal opacity-50">
         {textCheck === '' ? defaultText : textCheck}
@@ -70,7 +70,7 @@
       {/if}
     </Button>
   </Popover.Trigger>
-  <Popover.Content class={className}>
+  <Popover.Content class={popoverClass}>
     <Command.Root shouldFilter={false}>
       <Command.Input placeholder={searchText} bind:value={rawValue} on:input={handleInput} />
       <Command.Empty>{emptyText}</Command.Empty>

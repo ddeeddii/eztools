@@ -35,13 +35,13 @@
       <div class="w-full max-w-lg sm:px-4">
         <div class="flex flex-col gap-1.5" bind:clientWidth={autocompleteDivWitdh}>
           <Label for="email">Origin Item</Label>
-          <Autocomplete mode="single" class="w-full p-0" />
+          <Autocomplete mode="single" popoverClass="w-full p-0" triggerClass="h-12 lg:h-10" />
         </div>
       </div>
 
       <div class="flex w-full max-w-lg flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
-        <ImageInput uid="1" imageUrl={'preview'} />
+        <ImageInput uid="1" imageUrl={'preview'} class="h-12 lg:h-10" />
       </div>
     </div>
   </Collapsible.Content>
