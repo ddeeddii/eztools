@@ -3,7 +3,7 @@
   import * as Card from '$lib/components/ui/card'
 </script>
 
-<div class="mt-32 flex justify-center">
+<div class="flex justify-center pt-32">
   <Card.Root class="w-80">
     <Card.Header>
       <Card.Title class="text-center text-3xl">EzTools</Card.Title>

@@ -76,7 +76,7 @@
   </Label>
 
   {#if files && files.length > 0}
-    <Button variant="outline" size="icon" class="ml-1" on:click={removeImage}>
+    <Button variant="outline" size="icon" class={'ml-1 ' + className} on:click={removeImage}>
       <Trash class="w-8" />
     </Button>
   {/if}

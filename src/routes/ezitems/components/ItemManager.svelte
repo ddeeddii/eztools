@@ -10,7 +10,7 @@
     <!-- TODO: autocomplete search -->
     <Button variant="outline">Manage Items</Button>
   </Dialog.Trigger>
-  <Dialog.Content class="h-[90%] max-w-[90%] xl:w-3/4">
+  <Dialog.Content class="h-[90%] max-w-[90%] xl:w-4/6">
     <div>
       <Dialog.Header class="mb-8">
         <Dialog.Title>Item Management</Dialog.Title>
