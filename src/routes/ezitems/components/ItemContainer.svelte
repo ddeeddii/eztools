@@ -5,11 +5,8 @@
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
   import ImageInput from '@/components/ui/image-input/ImageInput.svelte'
 
-  let autocompleteDivWitdh = 0
-  let windowWidth = 0
+  let selectedItem: any
 </script>
-
-<svelte:window bind:innerWidth={windowWidth} />
 
 <Collapsible.Root class="my-4 w-full rounded-sm border shadow-sm">
   <Collapsible.Trigger class="mx-4 flex h-16 w-full items-center justify-start">
@@ -33,9 +30,9 @@
       </div>
 
       <div class="w-full max-w-lg sm:px-4">
-        <div class="flex flex-col gap-1.5" bind:clientWidth={autocompleteDivWitdh}>
+        <div class="flex flex-col gap-1.5">
           <Label for="email">Origin Item</Label>
-          <Autocomplete mode="single" popoverClass="w-full p-0" triggerClass="h-12 lg:h-10" />
+          <Autocomplete data={[]} {selectedItem} />
         </div>
       </div>
 

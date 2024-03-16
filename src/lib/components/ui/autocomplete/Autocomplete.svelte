@@ -1,92 +1,71 @@
 <script lang="ts">
-  import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down'
-  import Search from 'lucide-svelte/icons/search'
-  import * as Command from '$lib/components/ui/command'
-  import * as Popover from '$lib/components/ui/popover'
-  import { Button } from '$lib/components/ui/button'
-  import { tick } from 'svelte'
-  import Fuse from 'fuse.js'
   import type { searchItem } from '@/index.js'
+  import { flyAndScale } from '@/utils.js'
+  import { Combobox } from 'bits-ui'
+  import Fuse from 'fuse.js'
+  import { ChevronsUpDown } from 'lucide-svelte/icons'
+
+  export let selectedItem: searchItem
 
   export let defaultText = 'Select an item'
-  export let searchText = 'Search items'
   export let emptyText = 'No items found'
   export let data: Array<searchItem> = []
-  export let mode: 'single' | 'many' = 'single'
 
-  export let popoverClass = ''
-  export let triggerClass = ''
+  let inputValue = ''
+
   // TODO fix repeating items (?)
   // TODO search algorithm config
   // -> fuzzy search
   // -> default basic search
-  let itemsShown: Array<searchItem> = data.slice(0, 10)
+  const defaultItems = data.slice(0, 10)
+  let filteredItems: Array<searchItem> = data.slice(0, 10)
 
-  let open = false
-  let selectedItem = ''
-
-  function closeAndFocusTrigger(triggerId: string) {
-    open = false
-    tick().then(() => {
-      document.getElementById(triggerId)?.focus()
-    })
-  }
-
-  let rawValue = ''
   function searchItems() {
     const fuse = new Fuse(data, {
       keys: ['label']
     })
 
-    return fuse.search(rawValue)
+    return fuse.search(inputValue)
   }
 
   // TODO max items shown
-  function handleInput() {
-    itemsShown = searchItems()
+  function getSearchedItems() {
+    return searchItems()
       .map((res) => res.item)
       .slice(0, 10)
   }
 
-  $: textCheck = mode === 'single' ? selectedItem : rawValue
+  $: filteredItems = inputValue ? getSearchedItems() : defaultItems
 </script>
 
-<Popover.Root bind:open let:ids>
-  <Popover.Trigger asChild let:builder>
-    <Button
-      builders={[builder]}
-      variant="outline"
-      role="combobox"
-      aria-expanded={open}
-      class={'justify-between ' + triggerClass}
-    >
-      <span class="font-normal opacity-50">
-        {textCheck === '' ? defaultText : textCheck}
-      </span>
-      {#if mode === 'single'}
-        <ChevronsUpDown class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-      {:else}
-        <Search class="ml-2 h-4 w-4 shrink-0 opacity-50" />
-      {/if}
-    </Button>
-  </Popover.Trigger>
-  <Popover.Content class={popoverClass}>
-    <Command.Root shouldFilter={false}>
-      <Command.Input placeholder={searchText} bind:value={rawValue} on:input={handleInput} />
-      <Command.Empty>{emptyText}</Command.Empty>
-      <Command.Group>
-        {#each itemsShown as item}
-          <Command.Item
-            value={item.label}
-            onSelect={(currentValue) => {
-              selectedItem = currentValue
-              closeAndFocusTrigger(ids.trigger)
-            }}
-          >
-            {item.label}
-          </Command.Item>
-        {/each}
-      </Command.Group>
-    </Command.Root>
-  </Popover.Content>
-</Popover.Root>
+<Combobox.Root items={filteredItems} bind:inputValue bind:selected={selectedItem}>
+  <div class="relative">
+    <Combobox.Input
+      class="flex h-10 w-full rounded-md border border-input bg-background px-4 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      placeholder={defaultText}
+      aria-label={defaultText}
+    />
+    <ChevronsUpDown
+      class="absolute end-3 top-1/2 size-6 h-4 w-4 shrink-0 -translate-y-1/2 opacity-50"
+    />
+  </div>
+
+  <Combobox.Content
+    class="z-50 w-full rounded-md border border-muted bg-background px-2 py-3 shadow-popover outline-none"
+    transition={flyAndScale}
+    sideOffset={8}
+  >
+    {#each filteredItems as item (item.value)}
+      <Combobox.Item
+        class="rounded-button flex h-8 w-full select-none items-center py-3 pl-5 pr-1.5 text-sm capitalize outline-none transition-all duration-75 data-[highlighted]:rounded-md data-[highlighted]:bg-muted"
+        value={item.value}
+        label={item.label}
+      >
+        {item.label}
+      </Combobox.Item>
+    {:else}
+      <span class="block px-5 py-2 text-sm text-muted-foreground"> {emptyText} </span>
+    {/each}
+  </Combobox.Content>
+  <Combobox.HiddenInput name="itemSelect" />
+</Combobox.Root>
