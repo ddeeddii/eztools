@@ -1,5 +1,10 @@
-// place files you want to import through the `$lib` alias in this folder.
+import type { ItemType } from "../routes/ezitems/data/dataManager.js"
+
 export interface searchItem {
   label: string
-  value: number
+  value: {
+    type: ItemType,
+    id: string,
+    uid: string // Used to index the searched items
+  }
 }
