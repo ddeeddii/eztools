@@ -4,9 +4,16 @@
   import { Label } from '$lib/components/ui/label'
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
   import ImageInput from '@/components/ui/image-input/ImageInput.svelte'
-  import { SearchableDb, type Item, ItemType, getSearchableItem } from '../data/dataManager.js'
-  import ArrowRight from 'lucide-svelte/icons/arrow-right'
+  import {
+    SearchableDb,
+    type Item,
+    ItemType,
+    getSearchableItem,
+    ItemData
+  } from '../data/dataManager.js'
+  import { ArrowRight, Trash } from 'lucide-svelte/icons'
   import type { searchItem } from '@/index.js'
+  import { Button } from '$lib/components/ui/button'
 
   export let item: Item
   const itemTypeText = ['Unset', 'Item', 'Trinket', 'Pocket Item']
@@ -23,6 +30,10 @@
   }
 
   $: onSelectedItemChange(selectedItem)
+
+  function deleteItem() {
+    $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
+  }
 </script>
 
 <Collapsible.Root class="my-4 w-full rounded-sm border shadow-sm" bind:open={item.open}>
@@ -32,13 +43,13 @@
       <span
         >{selectedItem ? selectedItem.label : 'Unset'}
         <ArrowRight class="inline" />
-        {item.name}</span
+        {item.name === '' ? 'Unnamed' : item.name}</span
       >
     </div>
   </Collapsible.Trigger>
   <Collapsible.Content class="mx-4 mb-4">
     <div class="grid grid-cols-1 grid-rows-4 sm:grid-cols-2 sm:grid-rows-2">
-      <div class="mb-4 flex w-full max-w-lg flex-col gap-1.5 sm:px-4">
+      <div class="max-w-xxl mb-4 mr-4 flex w-full flex-col gap-1.5 sm:px-4">
         <Label for="item name">Item Name</Label>
         <Input
           bind:value={item.name}
@@ -49,7 +60,7 @@
         />
       </div>
 
-      <div class="flex w-full max-w-lg flex-col gap-1.5">
+      <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="item description">Item Description</Label>
         <Input
           bind:value={item.description}
@@ -60,17 +71,21 @@
         />
       </div>
 
-      <div class="w-full max-w-lg sm:px-4">
+      <div class="max-w-xxl w-full sm:px-4">
         <div class="flex flex-col gap-1.5">
           <Label for="origin">Origin Item</Label>
           <Autocomplete class="h-12 lg:h-10" data={SearchableDb} bind:selected={selectedItem} />
         </div>
       </div>
 
-      <div class="flex w-full max-w-lg flex-col gap-1.5">
+      <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
         <ImageInput uid="1" imageUrl={'preview'} class="h-12 lg:h-10" />
       </div>
+    </div>
+
+    <div class="flex justify-center sm:justify-end">
+      <Button on:click={deleteItem} variant="destructive" class="h-12 lg:h-10">Delete Item</Button>
     </div>
   </Collapsible.Content>
 </Collapsible.Root>
