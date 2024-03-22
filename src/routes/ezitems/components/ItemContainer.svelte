@@ -38,7 +38,7 @@
 
 <Collapsible.Root class="my-4 w-full rounded-sm border shadow-sm" bind:open={item.open}>
   <Collapsible.Trigger class="flex h-16 w-full items-center justify-start px-4">
-    <div class="text-2xl">
+    <div class="text-xl sm:text-2xl">
       <span class={'font-semibold ' + itemTypeColors[item.type]}>{itemTypeText[item.type]}</span>
       <span
         >{selectedItem ? selectedItem.label : 'Unset'}
