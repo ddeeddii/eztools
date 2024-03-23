@@ -1,11 +1,11 @@
 <script lang="ts">
   import { Plus } from 'lucide-svelte'
   import { Button } from '$lib/components/ui/button'
-  import * as Dialog from '$lib/components/ui/dialog'
   import ItemContainer from './ItemContainer.svelte'
   import { randAnimal, randTextRange } from '@ngneat/falso'
   import { ItemType, type Item, uid, ItemData } from '../data/dataManager'
   import { flyAndScale } from '@/utils.js'
+  import PersistentDialog from '@/components/ui/persistent-dialog/persistent-dialog.svelte'
 
   const items: Array<Item> = []
 
@@ -42,26 +42,25 @@
 
     console.log(items)
   }
+
+  let dialogOpen = false
+  function handleButtonClick() {
+    dialogOpen = !dialogOpen
+  }
 </script>
 
-<Dialog.Root>
-  <Dialog.Trigger class="mt-12">
-    <!-- TODO: item create button -->
-    <!-- TODO: autocomplete search -->
-    <Button variant="outline">Manage Items</Button>
-  </Dialog.Trigger>
-  <Dialog.Content class="h-[90%] max-w-[90%] overflow-y-scroll xl:w-4/6">
-    <div>
-      <Dialog.Header class="mb-8 text-left">
-        <Dialog.Title>Item Management</Dialog.Title>
-      </Dialog.Header>
+<Button variant="outline" class="mt-12" on:click={handleButtonClick}>Manage Items</Button>
 
-      {#each $ItemData as item, index (item.uid)}
-        <div transition:flyAndScale>
-          <ItemContainer {item} />
-        </div>
-      {/each}
-    </div>
+<PersistentDialog bind:open={dialogOpen} class="h-[90%] max-w-[90%] overflow-y-scroll xl:w-4/6">
+  <span slot="header" class="mb-8 text-left text-lg font-semibold leading-none tracking-tight"
+    >Item Management
+  </span>
+  <div>
+    {#each $ItemData as item, index (item.uid)}
+      <div transition:flyAndScale>
+        <ItemContainer {item} />
+      </div>
+    {/each}
 
     <Button
       on:click={createItem}
@@ -71,5 +70,5 @@
     >
       <Plus class="h-8 w-8 " />
     </Button>
-  </Dialog.Content>
-</Dialog.Root>
+  </div>
+</PersistentDialog>
