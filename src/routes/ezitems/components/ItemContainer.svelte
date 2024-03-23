@@ -34,6 +34,9 @@
   function deleteItem() {
     $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
   }
+
+  let rawFileList = item.sprite === null ? undefined : item.sprite
+  $: item.sprite = rawFileList === undefined ? null : rawFileList
 </script>
 
 <Collapsible.Root class="my-4 w-full rounded-sm border shadow-sm" bind:open={item.open}>
@@ -80,7 +83,7 @@
 
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
-        <ImageInput uid="1" imageUrl={'preview'} class="h-12 lg:h-10" />
+        <ImageInput id="picture" bind:files={rawFileList} class="h-12 lg:h-10" />
       </div>
     </div>
 

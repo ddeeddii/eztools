@@ -4,10 +4,10 @@
   import { Label } from '$lib/components/ui/label'
   import Button from '../button/button.svelte'
 
-  export let files: FileList | undefined = undefined
-  export let uid: string
-  export let imageUrl: string
+  export let files: FileList | undefined
+  export let imageUrl = ''
   export let defaultText = 'No image selected'
+  export let id = ''
 
   let className = ''
   export { className as class }
@@ -21,7 +21,6 @@
   })
 
   function getImage() {
-    console.log(files)
     if (!files) return
     if (files.length < 1) return
     inputText = files[0].name
@@ -49,7 +48,7 @@
 </script>
 
 <input
-  id={`sprite-input-${uid}`}
+  {id}
   type="file"
   accept="image/png"
   bind:this={inputElement}
@@ -60,7 +59,7 @@
 
 <div class="flex">
   <Label
-    for={`sprite-input-${uid}`}
+    for={id}
     class={'flex h-10 w-full cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm font-normal ' +
       className}
   >
