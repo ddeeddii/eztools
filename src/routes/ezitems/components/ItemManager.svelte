@@ -6,8 +6,11 @@
   import { ItemType, type Item, uid, ItemData } from '../data/dataManager'
   import { flyAndScale } from '@/utils.js'
   import PersistentDialog from '@/components/ui/persistent-dialog/persistent-dialog.svelte'
+  import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
+  import type { searchItem } from '@/index.js'
+  import Fuse from 'fuse.js'
 
-  const items: Array<Item> = []
+  const searchableItems: Array<searchItem> = []
 
   function createItem() {
     if (import.meta.env.DEV) {
@@ -23,6 +26,14 @@
         }
 
         $ItemData = [...$ItemData, item]
+        searchableItems.push({
+          label: item.name,
+          value: {
+            type: ItemType.Unset,
+            id: '',
+            uid: $uid.toString()
+          }
+        })
         $uid++
       }
     } else {
@@ -37,26 +48,56 @@
       }
 
       $ItemData = [...$ItemData, item]
+      searchableItems.push({
+        label: item.name,
+        value: {
+          type: ItemType.Unset,
+          id: '',
+          uid: $uid.toString()
+        }
+      })
       $uid++
     }
-
-    console.log(items)
   }
 
   let dialogOpen = false
   function handleButtonClick() {
     dialogOpen = !dialogOpen
   }
+
+  let input = ''
+  // TODO customize treshold
+  function searchItems() {
+    const fuse = new Fuse($ItemData, {
+      keys: ['name'],
+      threshold: 0.3
+    })
+
+    return fuse.search(input)
+  }
+
+  function getSearchedItems() {
+    return searchItems().map((res) => res.item)
+  }
+
+  $: filteredItems = input ? getSearchedItems() : $ItemData
 </script>
 
 <Button variant="outline" class="mt-12" on:click={handleButtonClick}>Manage Items</Button>
 
 <PersistentDialog bind:open={dialogOpen} class="h-[90%] max-w-[90%] overflow-y-scroll xl:w-4/6">
-  <span slot="header" class="mb-8 text-left text-lg font-semibold leading-none tracking-tight"
-    >Item Management
+  <span slot="header" class="mb-8 text-center text-lg font-semibold leading-none tracking-tight">
+    <div class="w-80">
+      <Autocomplete
+        class="h-10"
+        data={searchableItems}
+        bind:inputValue={input}
+        defaultText="Search for an item"
+      />
+    </div>
   </span>
   <div>
-    {#each $ItemData as item, index (item.uid)}
+    {#each filteredItems as item, index (item.uid)}
       <div transition:flyAndScale>
         <ItemContainer {item} />
       </div>

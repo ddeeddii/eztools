@@ -4,8 +4,16 @@
   import { Combobox } from 'bits-ui'
   import Fuse from 'fuse.js'
   import { ChevronsUpDown } from 'lucide-svelte/icons'
+  import { ItemType } from '../../../../routes/ezitems/data/dataManager.js'
 
-  export let selected: searchItem
+  export let selected: searchItem = {
+    label: '',
+    value: {
+      type: ItemType.Unset,
+      id: '',
+      uid: ''
+    }
+  }
 
   export let defaultText = 'Select an item'
   export let emptyText = 'No items found'
@@ -13,7 +21,7 @@
 
   let className = ''
   export { className as class }
-  let inputValue = ''
+  export let inputValue = ''
 
   // TODO fix repeating items (?)
   // TODO search algorithm config
