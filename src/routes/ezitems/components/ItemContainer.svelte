@@ -9,7 +9,8 @@
     type Item,
     ItemType,
     getSearchableItem,
-    ItemData
+    ItemData,
+    SearchableItems
   } from '../data/dataManager.js'
   import { ArrowRight, Trash } from 'lucide-svelte/icons'
   import type { searchItem } from '@/index.js'
@@ -37,6 +38,9 @@
 
   let rawFileList = item.sprite === null ? undefined : item.sprite
   $: item.sprite = rawFileList === undefined ? null : rawFileList
+
+  // both arrays must be in sync in order for this to work
+  $: SearchableItems[item.uid].label = item.name
 </script>
 
 <Collapsible.Root class="my-4 w-full rounded-sm border shadow-sm" bind:open={item.open}>

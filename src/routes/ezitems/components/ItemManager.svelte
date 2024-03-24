@@ -3,14 +3,12 @@
   import { Button } from '$lib/components/ui/button'
   import ItemContainer from './ItemContainer.svelte'
   import { randAnimal, randTextRange } from '@ngneat/falso'
-  import { ItemType, type Item, uid, ItemData } from '../data/dataManager'
+  import { ItemType, type Item, uid, ItemData, SearchableItems } from '../data/dataManager'
   import { flyAndScale } from '@/utils.js'
   import PersistentDialog from '@/components/ui/persistent-dialog/persistent-dialog.svelte'
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
   import type { searchItem } from '@/index.js'
   import Fuse from 'fuse.js'
-
-  const searchableItems: Array<searchItem> = []
 
   function createItem() {
     if (import.meta.env.DEV) {
@@ -26,7 +24,7 @@
         }
 
         $ItemData = [...$ItemData, item]
-        searchableItems.push({
+        SearchableItems.push({
           label: item.name,
           value: {
             type: ItemType.Unset,
@@ -48,7 +46,7 @@
       }
 
       $ItemData = [...$ItemData, item]
-      searchableItems.push({
+      SearchableItems.push({
         label: item.name,
         value: {
           type: ItemType.Unset,
@@ -90,7 +88,7 @@
     <div class="w-80">
       <Autocomplete
         class="h-10"
-        data={searchableItems}
+        data={SearchableItems}
         bind:inputValue={input}
         defaultText="Search for an item"
       />

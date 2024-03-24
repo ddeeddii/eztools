@@ -27,6 +27,7 @@ import type { searchItem } from "@/index.js"
 export const ItemDb = items
 export const TrinketDb = trinkets
 
+export const SearchableItems: Array<searchItem> = []
 export const SearchableDb: Array<searchItem> = []
 for (const [id, data] of Object.entries(items)) {
   const item: searchItem = {
