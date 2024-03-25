@@ -85,9 +85,9 @@
 
 <PersistentDialog bind:open={dialogOpen} class="h-[90%] max-w-[90%] overflow-y-scroll xl:w-4/6">
   <span slot="header" class="mb-8 text-center text-lg font-semibold leading-none tracking-tight">
-    <div class="w-80">
+    <div class="max-w-md pr-20">
       <Autocomplete
-        class="h-10"
+        class="h-12 lg:h-10"
         data={SearchableItems}
         bind:inputValue={input}
         defaultText="Search for an item"
