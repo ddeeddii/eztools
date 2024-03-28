@@ -54,3 +54,7 @@ export const flyAndScale = (
     easing: cubicOut
   }
 }
+
+// ts number clamp function
+export const clamp = (n: number, min: number, max: number) =>
+  Math.min(Math.max(n, min), max)

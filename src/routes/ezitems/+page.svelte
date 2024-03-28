@@ -3,6 +3,7 @@
   import { Input } from '$lib/components/ui/input'
   import { Label } from '$lib/components/ui/label'
   import ItemManager from './components/ItemManager.svelte'
+  import Menu from './components/Menu.svelte'
   import { ItemData } from './data/dataManager'
 </script>
 
@@ -11,7 +12,7 @@
     class="flex h-4/5 w-11/12 flex-col items-center justify-start rounded-lg border shadow-sm lg:w-3/5"
   >
     <Button class="mt-2 p-6 text-xl " on:click={() => console.log($ItemData)}>Download</Button>
-    <Button class="mt-2" variant="outline">Menu</Button>
+    <Menu />
 
     <div class="mt-12 flex w-full max-w-lg flex-col gap-1.5 px-4">
       <Label for="mod name">Mod Name</Label>

@@ -9,6 +9,7 @@
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
   import type { searchItem } from '@/index.js'
   import Fuse from 'fuse.js'
+  import { Config } from '../data/configManager.js'
 
   function createItem() {
     if (import.meta.env.DEV) {
@@ -64,11 +65,10 @@
   }
 
   let input = ''
-  // TODO customize treshold
   function searchItems() {
     const fuse = new Fuse($ItemData, {
       keys: ['name'],
-      threshold: 0.3
+      threshold: $Config.AutocompleteTreshold
     })
 
     return fuse.search(input)

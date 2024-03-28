@@ -5,6 +5,7 @@
   import Fuse from 'fuse.js'
   import { ChevronsUpDown } from 'lucide-svelte/icons'
   import { ItemType } from '../../../../routes/ezitems/data/dataManager.js'
+  import { Config } from '../../../../routes/ezitems/data/configManager.js'
 
   export let selected: searchItem = {
     label: '',
@@ -23,28 +24,22 @@
   export { className as class }
   export let inputValue = ''
 
-  // TODO fix repeating items (?)
-  // TODO search algorithm config
-  // -> fuzzy search
-  // ->> treshold
-  // -> default basic search
-  const defaultItems = data.slice(0, 10)
-  let filteredItems: Array<searchItem> = data.slice(0, 10)
+  const defaultItems = data.slice(0, $Config.AutocompleteMaxResults)
+  let filteredItems: Array<searchItem> = data.slice(0, $Config.AutocompleteMaxResults)
 
   function searchItems() {
     const fuse = new Fuse(data, {
       keys: ['label'],
-      threshold: 0.3
+      threshold: $Config.AutocompleteTreshold
     })
 
     return fuse.search(inputValue)
   }
 
-  // TODO max items shown
   function getSearchedItems() {
     return searchItems()
       .map((res) => res.item)
-      .slice(0, 10)
+      .slice(0, $Config.AutocompleteMaxResults)
   }
 
   $: filteredItems = inputValue ? getSearchedItems() : defaultItems
