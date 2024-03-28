@@ -10,7 +10,7 @@
     $Config.AllowCustomItemOrigin = DefaultConfig.AllowCustomItemOrigin
     $Config.AllowInvalidSprite = DefaultConfig.AllowInvalidSprite
     $Config.AutocompleteMaxResults = DefaultConfig.AutocompleteMaxResults
-    $Config.AutocompleteTreshold = DefaultConfig.AutocompleteTreshold
+    $Config.AutocompleteThreshold = DefaultConfig.AutocompleteThreshold
     $Config.ExportTemplate = DefaultConfig.ExportTemplate
     $Config.Minify = DefaultConfig.Minify
   }

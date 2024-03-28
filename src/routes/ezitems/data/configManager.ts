@@ -8,7 +8,7 @@ export interface Config {
   ExportTemplate: TemplateType,
   Minify: {Template: boolean, Data: boolean},
 
-  AutocompleteTreshold: number,
+  AutocompleteThreshold: number,
   AutocompleteMaxResults: number,
   AllowCustomItemOrigin: boolean,
   AllowInvalidSprite: boolean,
@@ -17,7 +17,7 @@ export interface Config {
 export const DefaultConfig: Config = {
   ExportTemplate: TemplateType.Vanilla,
   Minify: {Template: false, Data: true},
-  AutocompleteTreshold: 0.3,
+  AutocompleteThreshold: 0.3,
   AutocompleteMaxResults: 10,
   AllowCustomItemOrigin: false,
   AllowInvalidSprite: false,

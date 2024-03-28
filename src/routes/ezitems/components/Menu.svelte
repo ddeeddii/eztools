@@ -5,7 +5,7 @@
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
 
   import ModTemplateSetting from './settings/ModTemplateSetting.svelte'
-  import TresholdSetting from './settings/TresholdSetting.svelte'
+  import ThresholdSetting from './settings/ThresholdSetting.svelte'
   import AllowInvalidSpriteSetting from './settings/AllowInvalidSpriteSetting.svelte'
   import AllowCustomOriginSetting from './settings/AllowCustomOriginSetting.svelte'
   import MaxSuggestionsSetting from './settings/MaxSuggestionsSetting.svelte'
@@ -31,7 +31,7 @@
         <Tabs.Content value="config">
           <ModTemplateSetting />
           <MinifyModSetting />
-          <TresholdSetting />
+          <ThresholdSetting />
           <MaxSuggestionsSetting />
           <AllowCustomOriginSetting />
           <AllowInvalidSpriteSetting />

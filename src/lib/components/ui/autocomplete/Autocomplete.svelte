@@ -30,7 +30,7 @@
   function searchItems() {
     const fuse = new Fuse(data, {
       keys: ['label'],
-      threshold: $Config.AutocompleteTreshold
+      threshold: $Config.AutocompleteThreshold
     })
 
     return fuse.search(inputValue)

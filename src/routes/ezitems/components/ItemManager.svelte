@@ -68,7 +68,7 @@
   function searchItems() {
     const fuse = new Fuse($ItemData, {
       keys: ['name'],
-      threshold: $Config.AutocompleteTreshold
+      threshold: $Config.AutocompleteThreshold
     })
 
     return fuse.search(input)

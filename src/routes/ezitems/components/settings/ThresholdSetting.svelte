@@ -4,21 +4,21 @@
   import { Config } from '../../data/configManager.js'
   import { clamp } from '@/utils.js'
 
-  let displayedTreshold = $Config.AutocompleteTreshold
-  $: $Config.AutocompleteTreshold = clamp(displayedTreshold, 0, 1)
+  let displayedThreshold = $Config.AutocompleteThreshold
+  $: $Config.AutocompleteThreshold = clamp(displayedThreshold, 0, 1)
 </script>
 
 <SettingCard>
-  <span slot="title">Autocomplete search treshold</span>
+  <span slot="title">Autocomplete search threshold</span>
   <span slot="description"
-    >How strict the item searching algorith is.
+    >How strict the item searching algorithm is.
     <br />
     Range:
     <code>0.0</code> (requiring a perfect match) -
     <code>1.0</code> (matching anything)
   </span>
   <Input
-    bind:value={displayedTreshold}
+    bind:value={displayedThreshold}
     slot="input"
     type="number"
     step="0.1"
