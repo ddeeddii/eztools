@@ -41,7 +41,7 @@
 <div
   bind:this={dialog}
   class={cn(
-    'fixed z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg sm:rounded-lg md:w-full',
+    'fixed z-50 flex w-full max-w-lg flex-col gap-4 border bg-background p-6 shadow-lg sm:rounded-lg md:w-full',
     open ? '' : 'hidden',
     className,
     animation
@@ -92,7 +92,7 @@
     }
     to {
       transform: scale(0.9);
-      opcaity: 0;
+      opacity: 0;
     }
   }
 </style>

@@ -10,6 +10,7 @@
   import type { searchItem } from '@/index.js'
   import Fuse from 'fuse.js'
   import { Config } from '../data/configManager.js'
+  import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
 
   function createItem() {
     if (import.meta.env.DEV) {
@@ -83,7 +84,7 @@
 
 <Button variant="outline" class="mt-12" on:click={handleButtonClick}>Manage Items</Button>
 
-<PersistentDialog bind:open={dialogOpen} class="h-[90%] max-w-[90%] overflow-y-scroll xl:w-4/6">
+<PersistentDialog bind:open={dialogOpen} class="h-[90%] max-w-[90%] overflow-hidden xl:w-4/6">
   <span slot="header" class="mb-8 text-center text-lg font-semibold leading-none tracking-tight">
     <div class="max-w-md pr-20">
       <Autocomplete
@@ -94,20 +95,19 @@
       />
     </div>
   </span>
-  <div>
+  <Button
+    on:click={createItem}
+    variant="ghost"
+    size="icon"
+    class="absolute right-14 top-4 h-8 w-8 rounded-sm opacity-70 ring-offset-background transition-opacity hover:bg-inherit hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+  >
+    <Plus class="h-8 w-8 " />
+  </Button>
+  <ScrollArea class="h-[78vh] sm:pr-4">
     {#each filteredItems as item, index (item.uid)}
       <div transition:flyAndScale>
         <ItemContainer {item} />
       </div>
     {/each}
-
-    <Button
-      on:click={createItem}
-      variant="ghost"
-      size="icon"
-      class="absolute right-14 top-4 h-8 w-8 rounded-sm opacity-70 ring-offset-background transition-opacity hover:bg-inherit hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-    >
-      <Plus class="h-8 w-8 " />
-    </Button>
-  </div>
+  </ScrollArea>
 </PersistentDialog>
