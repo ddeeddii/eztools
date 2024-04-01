@@ -85,16 +85,21 @@
 <Button variant="outline" class="mt-12" on:click={handleButtonClick}>Manage Items</Button>
 
 <PersistentDialog bind:open={dialogOpen} class="h-[90%] max-w-[90%] overflow-hidden xl:w-4/6">
-  <span slot="header" class="mb-8 text-center text-lg font-semibold leading-none tracking-tight">
-    <div class="max-w-md pr-20">
-      <Autocomplete
-        class="h-12 lg:h-10"
-        data={SearchableItems}
-        bind:inputValue={input}
-        defaultText="Search for an item"
-      />
+  <span slot="header" class="mb-4 text-left text-lg font-semibold leading-none tracking-tight">
+    Item Manager
+
+    <div class="mt-4 flex justify-center">
+      <span class="w-full max-w-sm">
+        <Autocomplete
+          class="h-12 lg:h-10"
+          data={SearchableItems}
+          bind:inputValue={input}
+          defaultText="Search for an item"
+        />
+      </span>
     </div>
   </span>
+
   <Button
     on:click={createItem}
     variant="ghost"
@@ -103,7 +108,7 @@
   >
     <Plus class="h-8 w-8 " />
   </Button>
-  <ScrollArea class="h-[78vh] sm:pr-4">
+  <ScrollArea class="h-[77vh] sm:pr-4">
     {#each filteredItems as item, index (item.uid)}
       <div transition:flyAndScale>
         <ItemContainer {item} />
