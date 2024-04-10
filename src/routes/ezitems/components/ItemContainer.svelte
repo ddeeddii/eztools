@@ -12,7 +12,7 @@
     ItemData,
     SearchableItems
   } from '../data/dataManager.js'
-  import { ArrowRight, Trash } from 'lucide-svelte/icons'
+  import ArrowRight from 'lucide-svelte/icons/arrow-right'
   import type { searchItem } from '@/index.js'
   import { Button } from '$lib/components/ui/button'
 

@@ -3,7 +3,7 @@
   import { flyAndScale } from '@/utils.js'
   import { Combobox } from 'bits-ui'
   import Fuse from 'fuse.js'
-  import { ChevronsUpDown } from 'lucide-svelte/icons'
+  import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down'
   import { ItemType } from '../../../../routes/ezitems/data/dataManager.js'
   import { Config } from '../../../../routes/ezitems/data/configManager.js'
 
