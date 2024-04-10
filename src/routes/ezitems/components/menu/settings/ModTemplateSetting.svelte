@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as Select from '$lib/components/ui/select'
-  import SettingCard from '../SettingCard.svelte'
-  import { Config, TemplateType } from '../../data/configManager.js'
+  import SettingCard from '$ezitems/components/SettingCard.svelte'
+  import { Config, TemplateType } from '$ezitems/data/configManager'
 
   const templateDescription = {
     0: 'Default template for exporting mods',

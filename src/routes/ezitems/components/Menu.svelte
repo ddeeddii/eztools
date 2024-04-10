@@ -4,13 +4,13 @@
   import * as Tabs from '$lib/components/ui/tabs/index.js'
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
 
-  import ModTemplateSetting from './settings/ModTemplateSetting.svelte'
-  import ThresholdSetting from './settings/ThresholdSetting.svelte'
-  import AllowInvalidSpriteSetting from './settings/AllowInvalidSpriteSetting.svelte'
-  import AllowCustomOriginSetting from './settings/AllowCustomOriginSetting.svelte'
-  import MaxSuggestionsSetting from './settings/MaxSuggestionsSetting.svelte'
-  import MinifyModSetting from './settings/MinifyModSetting.svelte'
-  import ResetSettingsButton from './settings/ResetSettingsButton.svelte'
+  import ModTemplateSetting from './menu/settings/ModTemplateSetting.svelte'
+  import ThresholdSetting from './menu/settings/ThresholdSetting.svelte'
+  import AllowInvalidSpriteSetting from './menu/settings/AllowInvalidSpriteSetting.svelte'
+  import AllowCustomOriginSetting from './menu/settings/AllowCustomOriginSetting.svelte'
+  import MaxSuggestionsSetting from './menu/settings/MaxSuggestionsSetting.svelte'
+  import MinifyModSetting from './menu/settings/MinifyModSetting.svelte'
+  import ResetSettingsButton from './menu/settings/ResetSettingsButton.svelte'
 
   let menuState = false
 </script>

@@ -1,6 +1,6 @@
 <script>
   import { Button } from '@/components/ui/button'
-  import { Config, DefaultConfig } from '../../data/configManager'
+  import { Config, DefaultConfig } from '$ezitems/data/configManager'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   export let menuState = false
 

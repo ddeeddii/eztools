@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Input } from '$lib/components/ui/input'
-  import SettingCard from '../SettingCard.svelte'
-  import { Config } from '../../data/configManager.js'
+  import SettingCard from '$ezitems/components/SettingCard.svelte'
+  import { Config } from '$ezitems/data/configManager.js'
   import { clamp } from '@/utils.js'
 
   let displayedMaxResults = $Config.AutocompleteMaxResults

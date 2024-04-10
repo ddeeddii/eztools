@@ -1,7 +1,7 @@
 <script lang="ts">
-  import SettingCard from '../SettingCard.svelte'
+  import SettingCard from '$ezitems/components/SettingCard.svelte'
   import { Switch } from '$lib/components/ui/switch'
-  import { Config } from '../../data/configManager.js'
+  import { Config } from '$ezitems/data/configManager.js'
 </script>
 
 <SettingCard>
