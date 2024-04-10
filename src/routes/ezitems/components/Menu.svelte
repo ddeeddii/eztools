@@ -11,9 +11,11 @@
   import MaxSuggestionsSetting from './settings/MaxSuggestionsSetting.svelte'
   import MinifyModSetting from './settings/MinifyModSetting.svelte'
   import ResetSettingsButton from './settings/ResetSettingsButton.svelte'
+
+  let menuState = false
 </script>
 
-<Dialog.Root>
+<Dialog.Root bind:open={menuState}>
   <Dialog.Trigger>
     <Button class="mt-2" variant="outline">Menu</Button>
   </Dialog.Trigger>
@@ -36,7 +38,7 @@
           <AllowCustomOriginSetting />
           <AllowInvalidSpriteSetting />
           <div class="flex justify-center">
-            <ResetSettingsButton />
+            <ResetSettingsButton bind:menuState />
           </div>
         </Tabs.Content>
         <Tabs.Content value="data">Lorem Ipsum</Tabs.Content>

@@ -2,8 +2,11 @@
   import { Button } from '@/components/ui/button'
   import { Config, DefaultConfig } from '../../data/configManager'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
+  export let menuState = false
 
   function resetSettings() {
+    menuState = false
+
     // HACK: `$Config = DefaultConfig` works only once?
     // ^ fixes itself after re-rendering the component
     // workaround is used instead, hacky
@@ -25,7 +28,7 @@
       <AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
       <AlertDialog.Description>
         This action cannot be undone. This will reset all settings to their default values. <br
-        />Enter the menu again to see changes.
+        />The menu will close after resetting.
       </AlertDialog.Description>
     </AlertDialog.Header>
     <AlertDialog.Footer>
