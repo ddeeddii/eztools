@@ -43,7 +43,7 @@
   $: SearchableItems[item.uid].label = item.name
 </script>
 
-<Collapsible.Root class="mb-4 w-full rounded-sm border shadow-sm" bind:open={item.open}>
+<Collapsible.Root class="w-full rounded-sm border shadow-sm" bind:open={item.open}>
   <Collapsible.Trigger class="flex h-16 w-full items-center justify-start px-4">
     <div class="text-xl sm:text-2xl">
       <span class={'font-semibold ' + itemTypeColors[item.type]}>{itemTypeText[item.type]}</span>

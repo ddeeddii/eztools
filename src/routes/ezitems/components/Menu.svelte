@@ -32,14 +32,16 @@
       </Tabs.List>
       <ScrollArea class="h-[70vh] sm:pr-4">
         <Tabs.Content value="config">
-          <ModTemplateSetting />
-          <MinifyModSetting />
-          <ThresholdSetting />
-          <MaxSuggestionsSetting />
-          <AllowCustomOriginSetting />
-          <AllowInvalidSpriteSetting />
-          <div class="flex justify-center">
-            <ResetSettingsButton bind:menuState />
+          <div class="flex flex-col gap-4">
+            <ModTemplateSetting />
+            <MinifyModSetting />
+            <ThresholdSetting />
+            <MaxSuggestionsSetting />
+            <AllowCustomOriginSetting />
+            <AllowInvalidSpriteSetting />
+            <div class="flex justify-center">
+              <ResetSettingsButton bind:menuState />
+            </div>
           </div>
         </Tabs.Content>
         <Tabs.Content value="data">Lorem Ipsum</Tabs.Content>

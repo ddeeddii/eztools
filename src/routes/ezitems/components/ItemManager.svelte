@@ -109,10 +109,12 @@
     <Plus class="h-8 w-8 " />
   </Button>
   <ScrollArea class="h-[77vh] sm:pr-4">
-    {#each filteredItems as item, index (item.uid)}
-      <div transition:flyAndScale>
-        <ItemContainer {item} />
-      </div>
-    {/each}
+    <div class="flex flex-col gap-4">
+      {#each filteredItems as item, index (item.uid)}
+        <div transition:flyAndScale>
+          <ItemContainer {item} />
+        </div>
+      {/each}
+    </div>
   </ScrollArea>
 </PersistentDialog>
