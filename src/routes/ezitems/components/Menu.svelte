@@ -11,6 +11,7 @@
   import MaxSuggestionsSetting from './menu/settings/MaxSuggestionsSetting.svelte'
   import MinifyModSetting from './menu/settings/MinifyModSetting.svelte'
   import ResetSettingsButton from './menu/settings/ResetSettingsButton.svelte'
+  import InfoPage from './menu/InfoPage.svelte'
 
   let menuState = false
 </script>
@@ -42,7 +43,9 @@
           </div>
         </Tabs.Content>
         <Tabs.Content value="data">Lorem Ipsum</Tabs.Content>
-        <Tabs.Content value="info">Lorem Ipsum</Tabs.Content>
+        <Tabs.Content value="info">
+          <InfoPage />
+        </Tabs.Content>
       </ScrollArea>
     </Tabs.Root>
   </Dialog.Content>
