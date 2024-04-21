@@ -6,16 +6,16 @@
 </script>
 
 <div class="flex justify-around pb-4">
-  <Button href="https://github.com/ddeeddii/eztools/" target="_blank" class="mt-2" variant="ghost">
-    <Bug class="mr-2 h-6 w-6" />
-    Report bugs
-  </Button>
   <Button
     href="https://github.com/ddeeddii/eztools/issues"
     target="_blank"
     class="mt-2"
     variant="ghost"
   >
+    <Bug class="mr-2 h-6 w-6" />
+    Report bugs
+  </Button>
+  <Button href="https://github.com/ddeeddii/eztools" target="_blank" class="mt-2" variant="ghost">
     <Code class="mr-2 h-6 w-6" />
     Source code
   </Button>
