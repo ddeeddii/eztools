@@ -2,6 +2,7 @@
   import { Button } from '$lib/components/ui/button'
   import { Input } from '$lib/components/ui/input'
   import { Label } from '$lib/components/ui/label'
+  import AlertDialog from '@/components/ui/global-alert-dialog/AlertDialog.svelte'
   import ItemManager from './components/ItemManager.svelte'
   import Menu from './components/Menu.svelte'
   import { ItemData } from './data/dataManager'
@@ -32,3 +33,6 @@
     <ItemManager />
   </div>
 </div>
+
+<!-- singleton, allows for showAlertDialog -->
+<AlertDialog />
