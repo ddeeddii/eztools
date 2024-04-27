@@ -13,7 +13,7 @@
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
 
   function createItem() {
-    if (import.meta.env.DEV) {
+    if (!import.meta.env.DEV) {
       for (let i = 0; i < 100; i++) {
         const item: Item = {
           originItemId: '',
@@ -26,7 +26,7 @@
         }
 
         $ItemData = [...$ItemData, item]
-        SearchableItems.push({
+        $SearchableItems.push({
           label: item.name,
           value: {
             type: ItemType.Unset,
@@ -48,7 +48,7 @@
       }
 
       $ItemData = [...$ItemData, item]
-      SearchableItems.push({
+      $SearchableItems.push({
         label: item.name,
         value: {
           type: ItemType.Unset,
@@ -92,7 +92,7 @@
       <span class="w-full max-w-sm">
         <Autocomplete
           class="h-12 lg:h-10"
-          data={SearchableItems}
+          data={$SearchableItems}
           bind:inputValue={input}
           defaultText="Search for an item"
         />

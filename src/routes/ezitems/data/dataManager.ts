@@ -27,7 +27,7 @@ import type { searchItem } from "@/index.js"
 export const ItemDb = items
 export const TrinketDb = trinkets
 
-export const SearchableItems: Array<searchItem> = []
+export const SearchableItems: Writable<Array<searchItem>> = writable([])
 export const SearchableDb: Array<searchItem> = []
 for (const [id, data] of Object.entries(items)) {
   const item: searchItem = {
@@ -77,5 +77,16 @@ export function getSearchableItem(item: Item): searchItem {
       id: item.originItemId,
       uid: `i${item.originItemId}`
     }
+  }
+}
+
+export function syncSearchableItems(items: Array<Item>) {
+  SearchableItems.set([])
+  for (const item of items) {
+    const searchableItem = getSearchableItem(item)
+    SearchableItems.update((items) => {
+      items.push(searchableItem)
+      return items
+    })
   }
 }

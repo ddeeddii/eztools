@@ -40,7 +40,7 @@
   $: item.sprite = rawFileList === undefined ? null : rawFileList
 
   // both arrays must be in sync in order for this to work
-  $: SearchableItems[item.uid].label = item.name
+  $: $SearchableItems[item.uid].label = item.name
 </script>
 
 <Collapsible.Root class="w-full rounded-sm border shadow-sm" bind:open={item.open}>

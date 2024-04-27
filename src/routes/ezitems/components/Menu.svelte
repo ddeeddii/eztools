@@ -12,6 +12,7 @@
   import MinifyModSetting from './menu/settings/MinifyModSetting.svelte'
   import ResetSettingsButton from './menu/settings/ResetSettingsButton.svelte'
   import InfoPage from './menu/InfoPage.svelte'
+  import DataPage from './menu/DataPage.svelte'
 
   let menuState = false
 </script>
@@ -24,14 +25,14 @@
     <Dialog.Header>
       <Dialog.Title>Menu</Dialog.Title>
     </Dialog.Header>
-    <Tabs.Root value="config">
+    <Tabs.Root value="config" class="h-full">
       <Tabs.List class="mt-2 grid w-full grid-cols-3">
         <Tabs.Trigger value="config">Config</Tabs.Trigger>
         <Tabs.Trigger value="data">Data</Tabs.Trigger>
         <Tabs.Trigger value="info">Information</Tabs.Trigger>
       </Tabs.List>
-      <ScrollArea class="h-[70vh] sm:pr-4">
-        <Tabs.Content value="config">
+      <Tabs.Content value="config">
+        <ScrollArea class="h-[70vh] sm:pr-4">
           <div class="flex flex-col gap-4">
             <ModTemplateSetting />
             <MinifyModSetting />
@@ -43,12 +44,16 @@
               <ResetSettingsButton bind:menuState />
             </div>
           </div>
-        </Tabs.Content>
-        <Tabs.Content value="data">Lorem Ipsum</Tabs.Content>
-        <Tabs.Content value="info">
-          <InfoPage />
-        </Tabs.Content>
-      </ScrollArea>
+        </ScrollArea>
+      </Tabs.Content>
+      <Tabs.Content value="data" class="h-full">
+        <ScrollArea class="h-[70vh]">
+          <DataPage />
+        </ScrollArea>
+      </Tabs.Content>
+      <Tabs.Content value="info">
+        <InfoPage />
+      </Tabs.Content>
     </Tabs.Root>
   </Dialog.Content>
 </Dialog.Root>
