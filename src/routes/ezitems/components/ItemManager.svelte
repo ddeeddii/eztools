@@ -7,13 +7,12 @@
   import { flyAndScale } from '@/utils.js'
   import PersistentDialog from '@/components/ui/persistent-dialog/persistent-dialog.svelte'
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
-  import type { searchItem } from '@/index.js'
   import Fuse from 'fuse.js'
   import { Config } from '../data/configManager.js'
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
 
   function createItem() {
-    if (!import.meta.env.DEV) {
+    if (import.meta.env.DEV) {
       for (let i = 0; i < 100; i++) {
         const item: Item = {
           originItemId: '',
