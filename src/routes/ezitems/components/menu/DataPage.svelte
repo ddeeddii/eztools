@@ -130,7 +130,7 @@
         <div class="flex w-full flex-col items-center gap-4">
           <Button
             variant="destructive"
-            class="w-64"
+            class="w-full max-w-64"
             on:click={() => {
               showAlertDialog(
                 deleteAllUnsetItems,
@@ -144,7 +144,7 @@
 
           <Button
             variant="destructive"
-            class="w-64"
+            class="w-full max-w-64"
             on:click={() => {
               showAlertDialog(deleteAllItems, 'This action will delete current items.')
             }}
