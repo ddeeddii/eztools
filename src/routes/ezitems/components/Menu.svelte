@@ -33,7 +33,7 @@
       </Tabs.List>
       <Tabs.Content value="config">
         <ScrollArea class="h-[70vh] sm:pr-4">
-          <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-4 pb-10 sm:pb-2">
             <ModTemplateSetting />
             <MinifyModSetting />
             <ThresholdSetting />
