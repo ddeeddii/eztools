@@ -19,6 +19,7 @@ export interface StoredData {
   id?: number
   name: string
   description: string
+  date: Date
   items: Array<StoredItem>
 }
 
@@ -28,7 +29,7 @@ export class StoredItemDb extends Dexie {
   constructor() {
     super('myDatabase')
     this.version(1).stores({
-      SavedItems: '++id, name, description, items'
+      SavedItems: '++id, name, description, date, items'
     })
   }
 }

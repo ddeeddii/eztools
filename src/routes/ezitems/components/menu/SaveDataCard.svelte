@@ -22,11 +22,16 @@
   <Card.Header>
     <Card.Title>{data.name}</Card.Title>
     <Card.Description class="flex flex-col">
-      <span>
-        {data.description}
-      </span>
+      {#if data.description.length > 0}
+        <span>
+          {data.description}
+        </span>
+      {/if}
       <span>
         {data.items.length} item{data.items.length === 1 ? '' : 's'}
+      </span>
+      <span>
+        {data.date.toLocaleDateString([], { hour: 'numeric', minute: 'numeric' })}
       </span>
     </Card.Description>
   </Card.Header>

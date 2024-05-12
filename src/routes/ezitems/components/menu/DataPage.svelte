@@ -12,6 +12,7 @@
   import { liveQuery } from 'dexie'
   import { flyAndScale } from '@/utils.js'
   import { Label } from '$lib/components/ui/label/index.js'
+  import { toast } from 'svelte-sonner'
 
   function loadDataFromMod() {
     // TODO
@@ -34,15 +35,21 @@
   let name = ''
   let desc = ''
   async function saveData() {
-    if (name === '' || desc === '') {
-      // TODO
+    if (name === '') {
+      toast.error('You must provide a name for the data')
+      return
+    }
+
+    if ($ItemData.length === 0) {
+      toast.error('You must have at least one item to save item data')
       return
     }
 
     try {
       await db.SavedItems.add({
         name,
-        description: desc,
+        description: desc || '',
+        date: new Date(),
         items: $ItemData satisfies Array<StoredItem>
       })
     } catch (e) {
@@ -109,7 +116,7 @@
             <Input
               id="saveDesc"
               type="text"
-              placeholder="Description of what that data contains"
+              placeholder="Description of what that data contains (optional)"
               bind:value={desc}
             />
           </div>

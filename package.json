@@ -50,6 +50,7 @@
     "dexie": "^4.0.4",
     "lucide-svelte": "^0.344.0",
     "svelte-persisted-store": "^0.9.1",
+    "svelte-sonner": "^0.3.24",
     "tailwind-merge": "^2.2.1",
     "tailwind-variants": "^0.2.0"
   },

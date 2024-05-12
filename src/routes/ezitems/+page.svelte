@@ -6,7 +6,10 @@
   import ItemManager from './components/ItemManager.svelte'
   import Menu from './components/Menu.svelte'
   import { ItemData } from './data/dataManager'
+  import { Toaster } from '$lib/components/ui/sonner'
 </script>
+
+<Toaster />
 
 <div class="flex h-full justify-center pb-8 pt-8">
   <div
