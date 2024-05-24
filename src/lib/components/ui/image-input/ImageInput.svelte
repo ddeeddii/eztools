@@ -8,6 +8,7 @@
   export let imageUrl = ''
   export let defaultText = 'No image selected'
   export let id = ''
+  export let disabled = false
 
   let className = ''
   export { className as class }
@@ -47,21 +48,22 @@
   }
 </script>
 
-<input
-  {id}
-  type="file"
-  accept="image/png"
-  bind:this={inputElement}
-  bind:files
-  on:change={getImage}
-  hidden
-/>
+{#if !disabled}
+  <input
+    {id}
+    type="file"
+    accept="image/png"
+    bind:this={inputElement}
+    bind:files
+    on:change={getImage}
+    hidden
+  />
+{/if}
 
 <div class="flex">
   <Label
     for={id}
-    class={'flex h-10 w-full cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm font-normal ' +
-      className}
+    class={`${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} flex h-10 w-full items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm font-normal ${className}`}
   >
     {#if files && files.length > 0}
       <span class="flex-shrink-0 pr-3">
@@ -69,8 +71,8 @@
       </span>
     {/if}
 
-    <span class:text-muted-foreground={inputText === defaultText}>
-      {inputText}
+    <span class:text-muted-foreground={inputText === defaultText || disabled}>
+      {disabled ? 'Sprite selection is disabled for this item type' : inputText}
     </span>
   </Label>
 

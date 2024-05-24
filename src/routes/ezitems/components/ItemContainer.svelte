@@ -10,15 +10,35 @@
     ItemType,
     getSearchableItem,
     ItemData,
-    SearchableItems
+    SearchableItems,
+    getPocketItemSubType
   } from '../data/dataManager.js'
   import ArrowRight from 'lucide-svelte/icons/arrow-right'
   import type { searchItem } from '@/index.js'
   import { Button } from '$lib/components/ui/button'
+  import { Config, TemplateType } from '$ezitems/data/configManager.js'
+  import { toast } from 'svelte-sonner'
 
   export let item: Item
   const itemTypeText = ['Unset', 'Item', 'Trinket', 'Pocket Item']
   const itemTypeColors = ['text-neutral-300', 'text-blue-300', 'text-red-300']
+
+  const pocketItemSubTypeText = {
+    tarot: 'Card',
+    suit: 'Card',
+    rune: 'Rune',
+    special: 'Card',
+    object: 'Card',
+    tarot_reverse: 'Reverse Card'
+  }
+  const pocketItemSubTypeColors = {
+    tarot: 'text-green-300',
+    suit: 'text-green-300',
+    rune: 'text-purple-300',
+    special: 'text-green-300',
+    object: 'text-green-300',
+    tarot_reverse: 'text-green-300'
+  }
 
   let selectedItem = getSearchableItem(item)
   function onSelectedItemChange(usedItem: searchItem) {
@@ -26,8 +46,23 @@
       return
     }
 
+    // the strict equality operator doesn't work in the second check for reasons beyond explanation
+    // as such, we use the standard equality operator
+    if (
+      usedItem.value.type === ItemType.PocketItem &&
+      $Config.ExportTemplate != TemplateType.Repentogon
+    ) {
+      toast.error('Pocket items are only supported in the REPENTOGON template')
+      selectedItem = getSearchableItem(item) // reset selected item
+      return
+    }
+
     item.type = usedItem.value.type
     item.originItemId = usedItem.value.id
+
+    if (item.type === ItemType.PocketItem) {
+      rawFileList = undefined
+    }
   }
 
   $: onSelectedItemChange(selectedItem)
@@ -46,7 +81,13 @@
 <Collapsible.Root class="w-full rounded-sm border shadow-sm" bind:open={item.open}>
   <Collapsible.Trigger class="flex h-16 w-full items-center justify-start px-4">
     <div class="text-xl sm:text-2xl">
-      <span class={'font-semibold ' + itemTypeColors[item.type]}>{itemTypeText[item.type]}</span>
+      {#if item.type === ItemType.PocketItem}
+        <span class={'font-semibold ' + pocketItemSubTypeColors[getPocketItemSubType(item)]}>
+          {pocketItemSubTypeText[getPocketItemSubType(item)]}
+        </span>
+      {:else}
+        <span class={'font-semibold ' + itemTypeColors[item.type]}>{itemTypeText[item.type]}</span>
+      {/if}
       <span
         >{selectedItem ? selectedItem.label : 'Unset'}
         <ArrowRight class="inline" />
@@ -87,11 +128,15 @@
 
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
-        <ImageInput id="picture" bind:files={rawFileList} class="h-12 lg:h-10" />
+        <ImageInput
+          disabled={item.type === ItemType.PocketItem}
+          id="picture"
+          bind:files={rawFileList}
+          class="h-12 lg:h-10"
+        />
       </div>
     </div>
-
-    <div class="flex justify-center sm:justify-end">
+    <div class="flex justify-center">
       <Button on:click={deleteItem} variant="destructive" class="h-12 lg:h-10">Delete Item</Button>
     </div>
   </Collapsible.Content>

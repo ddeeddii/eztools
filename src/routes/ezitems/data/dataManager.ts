@@ -1,4 +1,4 @@
-import { writable, type Writable } from "svelte/store"
+import { writable, type Writable } from 'svelte/store'
 
 export const uid = writable(0)
 export const ItemData: Writable<Array<Item>> = writable([])
@@ -7,7 +7,7 @@ export enum ItemType {
   Unset = 0,
   Item = 1,
   Trinket = 2,
-  PocketItem = 3,
+  PocketItem = 3
 }
 
 export interface Item {
@@ -23,9 +23,12 @@ export interface Item {
 
 import items from './items.json'
 import trinkets from './trinkets.json'
-import type { searchItem } from "@/index.js"
+import pocketitems from './pocketitems.json'
+import type { searchItem } from '@/index.js'
+
 export const ItemDb = items
 export const TrinketDb = trinkets
+export const PocketItemDb = pocketitems
 
 export const SearchableItems: Writable<Array<searchItem>> = writable([])
 export const SearchableDb: Array<searchItem> = []
@@ -53,13 +56,32 @@ for (const [id, data] of Object.entries(trinkets)) {
   SearchableDb.push(item)
 }
 
+for (const [id, data] of Object.entries(pocketitems)) {
+  const item: searchItem = {
+    label: data.name,
+    value: {
+      type: ItemType.PocketItem,
+      id: id,
+      uid: `p${id}`
+    }
+  }
+  SearchableDb.push(item)
+}
+
+export type PocketItemSubType = 'tarot' | 'suit' | 'rune' | 'special' | 'object' | 'tarot_reverse'
+export function getPocketItemSubType(item: Item): PocketItemSubType {
+  return PocketItemDb[item.originItemId as keyof typeof PocketItemDb].type as PocketItemSubType
+}
+
 export function getSearchableItem(item: Item): searchItem {
   let baseItemName = ''
-  if(item.type === ItemType.Item){
+  if (item.type === ItemType.Item) {
     baseItemName = ItemDb[item.originItemId as keyof typeof ItemDb].name
-  } else if(item.type === ItemType.Trinket){
+  } else if (item.type === ItemType.Trinket) {
     baseItemName = TrinketDb[item.originItemId as keyof typeof TrinketDb].name
-  } else if(item.type === ItemType.Unset){
+  } else if (item.type === ItemType.PocketItem) {
+    baseItemName = PocketItemDb[item.originItemId as keyof typeof PocketItemDb].name
+  } else if (item.type === ItemType.Unset) {
     return {
       label: '',
       value: {

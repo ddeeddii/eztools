@@ -52,7 +52,9 @@
         </ScrollArea>
       </Tabs.Content>
       <Tabs.Content value="info">
-        <InfoPage />
+        <ScrollArea class="h-[69vh]">
+          <InfoPage />
+        </ScrollArea>
       </Tabs.Content>
     </Tabs.Root>
   </Dialog.Content>
