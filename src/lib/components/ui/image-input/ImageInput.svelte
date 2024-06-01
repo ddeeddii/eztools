@@ -60,7 +60,7 @@
   />
 {/if}
 
-<div class="flex">
+<div class={`flex ${disabled ? 'opacity-50' : ''}`}>
   <Label
     for={id}
     class={`${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} flex h-10 w-full items-center overflow-hidden text-ellipsis whitespace-nowrap rounded-md border border-input bg-background px-3 py-2 text-sm font-normal ${className}`}
