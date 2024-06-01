@@ -49,7 +49,7 @@
     // the strict equality operator doesn't work in the second check for reasons beyond explanation
     // as such, we use the standard equality operator
     if (
-      usedItem.value.type === ItemType.PocketItem &&
+      (usedItem.value.type === ItemType.PocketItem || usedItem.value.type === ItemType.Pill) &&
       $Config.ExportTemplate != TemplateType.Repentogon
     ) {
       toast.error('Pocket items are only supported in the REPENTOGON template')
@@ -62,6 +62,10 @@
 
     if (item.type === ItemType.PocketItem) {
       rawFileList = undefined
+    }
+
+    if (item.type === ItemType.Pill) {
+      item.description = ''
     }
   }
 
@@ -85,6 +89,8 @@
         <span class={'font-semibold ' + pocketItemSubTypeColors[getPocketItemSubType(item)]}>
           {pocketItemSubTypeText[getPocketItemSubType(item)]}
         </span>
+      {:else if item.type === ItemType.Pill}
+        <span class={'font-semibold text-yellow-300'}> Pill </span>
       {:else}
         <span class={'font-semibold ' + itemTypeColors[item.type]}>{itemTypeText[item.type]}</span>
       {/if}
@@ -110,13 +116,24 @@
 
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="item description">Item Description</Label>
-        <Input
-          bind:value={item.description}
-          class="h-12 lg:h-10"
-          type="text"
-          id="item description"
-          placeholder="New description"
-        />
+        {#if item.type === ItemType.Pill}
+          <Input
+            bind:value={item.description}
+            class="h-12 lg:h-10"
+            type="text"
+            id="item description"
+            disabled
+            placeholder="Description is disabled for this item type"
+          />
+        {:else}
+          <Input
+            bind:value={item.description}
+            class="h-12 lg:h-10"
+            type="text"
+            id="item description"
+            placeholder="New description"
+          />
+        {/if}
       </div>
 
       <div class="max-w-xxl w-full sm:px-4">
@@ -129,7 +146,7 @@
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
         <ImageInput
-          disabled={item.type === ItemType.PocketItem}
+          disabled={item.type === ItemType.PocketItem || item.type === ItemType.Pill}
           id="picture"
           bind:files={rawFileList}
           class="h-12 lg:h-10"
