@@ -116,24 +116,16 @@
 
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="item description">Item Description</Label>
-        {#if item.type === ItemType.Pill}
-          <Input
-            bind:value={item.description}
-            class="h-12 lg:h-10"
-            type="text"
-            id="item description"
-            disabled
-            placeholder="Description is disabled for this item type"
-          />
-        {:else}
-          <Input
-            bind:value={item.description}
-            class="h-12 lg:h-10"
-            type="text"
-            id="item description"
-            placeholder="New description"
-          />
-        {/if}
+        <Input
+          bind:value={item.description}
+          class="h-12 lg:h-10"
+          type="text"
+          id="item description"
+          disabled={item.type === ItemType.Pill}
+          placeholder={item.type === ItemType.Pill
+            ? 'Description is disabled for this item type'
+            : 'New description'}
+        />
       </div>
 
       <div class="max-w-xxl w-full sm:px-4">
