@@ -1,7 +1,7 @@
 import { persisted } from 'svelte-persisted-store'
 
 export enum TemplateType {
-  Vanilla, Repentogon, Legacy
+  Vanilla, Repentogon
 }
 
 export interface Config {

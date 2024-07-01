@@ -57,14 +57,13 @@
               <p>
                 There are currently 3 available templates - <code>Default</code>,
                 <code>REPENTOGON</code>
-                and <code>Legacy</code>.
               </p>
               <p>
                 <code>Default</code> is the most basic template. It only supports items and trinkets.
               </p>
               <p>
-                <code>REPENTOGON</code> partially supports pocket items (cards, runes, souls, etc).
-                However, it
+                <code>REPENTOGON</code> partially supports pocket items (pills, cards, runes, souls,
+                etc) and has a built-in mod conflict notifier. However, it
                 <span class="font-semibold"
                   >requires the user to have <a
                     class="underline underline-offset-4"
@@ -87,6 +86,27 @@
     <Card.Content>
       <Accordion.Root>
         <Accordion.Item value="item-1">
+          <Accordion.Trigger>What features does the REPENTOGON template add?</Accordion.Trigger>
+          <Accordion.Content>
+            <div class="flex flex-col gap-2 pt-1">
+              <p>
+                1. Partial support for pocket items - cards, runes, souls can have their names and
+                descriptions changed (not sprites). Pills can only have their name changed (EID is
+                not supported for pills)
+              </p>
+              <p>
+                2. Built-in mod conflict notifier - if a mod is installed that changes the same
+                item, a warning will be shown to the user
+              </p>
+              <p>
+                3. More frequent updates - REPENTOGON is constantly updated, unlike the vanilla
+                game. Maintaining this template takes priority over the vanilla template because
+                frankly there isn't a reason to not use it
+              </p>
+            </div>
+          </Accordion.Content>
+        </Accordion.Item>
+        <Accordion.Item value="item-2">
           <Accordion.Trigger>Why can't I change sprites of pocket items?</Accordion.Trigger>
           <Accordion.Content>
             <div class="flex flex-col gap-2 pt-1">

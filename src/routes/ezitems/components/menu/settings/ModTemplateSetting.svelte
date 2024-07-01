@@ -5,14 +5,12 @@
 
   const templateDescription = {
     0: 'Default template for exporting mods',
-    1: 'Supercharged template with extra features, requires REPENTOGON installed',
-    2: 'Legacy template, not recommended'
+    1: 'Supercharged template with extra features, requires REPENTOGON installed'
   }
 
   const templateOptionString = {
     0: 'Vanilla',
-    1: 'REPENTOGON',
-    2: 'Legacy'
+    1: 'REPENTOGON'
   }
 
   let selected = {
@@ -43,7 +41,6 @@
     <Select.Content>
       <Select.Item value="0">Vanilla</Select.Item>
       <Select.Item value="1">REPENTOGON</Select.Item>
-      <Select.Item value="2">Legacy</Select.Item>
     </Select.Content>
   </Select.Root>
 </SettingCard>
