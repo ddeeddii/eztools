@@ -11,6 +11,7 @@ export interface StoredItem {
   description: string
 
   sprite: FileList | null
+  useCustomOrigin: boolean
   uid: number
   open: boolean
 }

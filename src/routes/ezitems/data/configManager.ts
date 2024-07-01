@@ -10,7 +10,6 @@ export interface Config {
 
   AutocompleteThreshold: number,
   AutocompleteMaxResults: number,
-  AllowCustomItemOrigin: boolean,
   AllowInvalidSprite: boolean,
 }
 
@@ -19,7 +18,6 @@ export const DefaultConfig: Config = {
   Minify: {Template: false, Data: true},
   AutocompleteThreshold: 0.3,
   AutocompleteMaxResults: 10,
-  AllowCustomItemOrigin: false,
   AllowInvalidSprite: false,
 }
 

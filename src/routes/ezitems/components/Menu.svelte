@@ -7,7 +7,6 @@
   import ModTemplateSetting from './menu/settings/ModTemplateSetting.svelte'
   import ThresholdSetting from './menu/settings/ThresholdSetting.svelte'
   import AllowInvalidSpriteSetting from './menu/settings/AllowInvalidSpriteSetting.svelte'
-  import AllowCustomOriginSetting from './menu/settings/AllowCustomOriginSetting.svelte'
   import MaxSuggestionsSetting from './menu/settings/MaxSuggestionsSetting.svelte'
   import MinifyModSetting from './menu/settings/MinifyModSetting.svelte'
   import ResetSettingsButton from './menu/settings/ResetSettingsButton.svelte'
@@ -38,7 +37,6 @@
             <MinifyModSetting />
             <ThresholdSetting />
             <MaxSuggestionsSetting />
-            <AllowCustomOriginSetting />
             <AllowInvalidSpriteSetting />
             <div class="flex justify-center">
               <ResetSettingsButton bind:menuState />

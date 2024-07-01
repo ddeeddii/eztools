@@ -10,6 +10,7 @@ export enum ItemType {
   PocketItem = 3,
   Pill = 4
 }
+export const ItemTypeText = ['Unset', 'Item', 'Trinket', 'Pocket Item', 'Pill']
 
 export interface Item {
   originItemId: string
@@ -19,6 +20,7 @@ export interface Item {
 
   sprite: FileList | null
   uid: number
+  useCustomOrigin: boolean
   open: boolean
 }
 
@@ -83,21 +85,44 @@ for (const [id, data] of Object.entries(pills)) {
   SearchableDb.push(item)
 }
 
+function isNumeric(value: string) {
+  return /^-?\d+$/.test(value);
+}
+
 export type PocketItemSubType = 'tarot' | 'suit' | 'rune' | 'special' | 'object' | 'tarot_reverse'
 export function getPocketItemSubType(item: Item): PocketItemSubType {
+  if(!isNumeric(item.originItemId as never)) {
+    return 'tarot'
+  }
   return PocketItemDb[item.originItemId as keyof typeof PocketItemDb].type as PocketItemSubType
 }
 
 export function getSearchableItem(item: Item): searchItem {
+  if (!isNumeric(item.originItemId as never)) { // item is using custom origin
+    return {
+      label: item.name,
+      value: {
+        type: item.type,
+        id: item.originItemId,
+        uid: `co-${item.name}` // note: could potentially collide with other items but its not a big deal
+      }
+    }
+  }
+  
   let baseItemName = ''
+  let uidPrefix = ''
   if (item.type === ItemType.Item) {
     baseItemName = ItemDb[item.originItemId as keyof typeof ItemDb].name
+    uidPrefix = 'i'
   } else if (item.type === ItemType.Trinket) {
     baseItemName = TrinketDb[item.originItemId as keyof typeof TrinketDb].name
+    uidPrefix = 't'
   } else if (item.type === ItemType.PocketItem) {
     baseItemName = PocketItemDb[item.originItemId as keyof typeof PocketItemDb].name
+    uidPrefix = "p"
   } else if (item.type === ItemType.Pill) {
     baseItemName = PillDb[item.originItemId as keyof typeof PillDb].name
+    uidPrefix = "pi"
   } else if (item.type === ItemType.Unset) {
     return {
       label: '',
@@ -114,7 +139,7 @@ export function getSearchableItem(item: Item): searchItem {
     value: {
       type: item.type,
       id: item.originItemId,
-      uid: `i${item.originItemId}`
+      uid: `${uidPrefix}${item.originItemId}`
     }
   }
 }

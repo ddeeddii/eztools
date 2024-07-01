@@ -10,7 +10,6 @@
     // HACK: `$Config = DefaultConfig` works only once?
     // ^ fixes itself after re-rendering the component
     // workaround is used instead, hacky
-    $Config.AllowCustomItemOrigin = DefaultConfig.AllowCustomItemOrigin
     $Config.AllowInvalidSprite = DefaultConfig.AllowInvalidSprite
     $Config.AutocompleteMaxResults = DefaultConfig.AutocompleteMaxResults
     $Config.AutocompleteThreshold = DefaultConfig.AutocompleteThreshold

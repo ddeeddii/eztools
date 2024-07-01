@@ -20,6 +20,7 @@
           name: randAnimal(),
           description: randTextRange({ min: 10, max: 100 }),
           sprite: null,
+          useCustomOrigin: false,
           uid: $uid,
           open: false
         }
@@ -42,6 +43,7 @@
         name: '',
         description: '',
         sprite: null,
+        useCustomOrigin: false,
         uid: $uid,
         open: false
       }
