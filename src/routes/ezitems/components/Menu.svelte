@@ -31,7 +31,8 @@
         <Tabs.Trigger value="info">Information</Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content value="config">
-        <ScrollArea class="h-[70vh] sm:pr-4">
+        <!-- HACK still trying to figure out how to make it work without explicit heights -->
+        <ScrollArea class="h-[60vh] sm:h-[70vh] sm:pr-4">
           <div class="flex flex-col gap-4 pb-10 sm:pb-2">
             <ModTemplateSetting />
             <MinifyModSetting />
@@ -45,12 +46,12 @@
         </ScrollArea>
       </Tabs.Content>
       <Tabs.Content value="data" class="h-full">
-        <ScrollArea class="h-[70vh]">
+        <ScrollArea class="h-[60vh] sm:h-[70vh]">
           <DataPage />
         </ScrollArea>
       </Tabs.Content>
       <Tabs.Content value="info">
-        <ScrollArea class="h-[69vh]">
+        <ScrollArea class="h-[60vh] sm:h-[70vh]">
           <InfoPage />
         </ScrollArea>
       </Tabs.Content>
