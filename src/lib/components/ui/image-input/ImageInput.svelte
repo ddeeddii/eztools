@@ -3,6 +3,8 @@
   import { Trash } from 'lucide-svelte'
   import { Label } from '$lib/components/ui/label'
   import Button from '../button/button.svelte'
+  import { toast } from 'svelte-sonner'
+  import { Config } from '$ezitems/data/configManager.js'
 
   export let files: FileList | undefined
   export let imageUrl = ''
@@ -21,13 +23,33 @@
     getImage()
   })
 
-  function getImage() {
+  async function getImage() {
     if (!files) return
     if (files.length < 1) return
-    inputText = files[0].name
+    const file = files[0]
+
+    if ($Config.AllowInvalidSprite === false) {
+      if (file.type !== 'image/png') {
+        toast.error('Only PNG images (with transparent backgrounds) are supported')
+        removeImage()
+        return
+      }
+
+      const img = new Image()
+      img.src = URL.createObjectURL(file)
+      await img.decode()
+
+      if (img.width !== 32 || img.height !== 32) {
+        toast.error('Only 32x32 images are supported')
+        removeImage()
+        return
+      }
+    }
+
+    inputText = file.name
 
     const reader = new FileReader()
-    reader.readAsDataURL(files[0])
+    reader.readAsDataURL(file)
     reader.onload = () => {
       imgElement.setAttribute('src', reader.result as string)
       imageUrl = reader.result as string
@@ -41,7 +63,7 @@
     files = undefined
   }
 
-  // remove sprite url if the user open file dialogue but doesnt select anything
+  // remove sprite url if the user open file dialogue but doesn't select anything
   $: if (files && files.length === 0) {
     imageUrl = ''
     inputText = defaultText
