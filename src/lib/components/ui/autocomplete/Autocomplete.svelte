@@ -12,7 +12,7 @@
     value: {
       type: ItemType.Unset,
       id: '',
-      uid: ''
+      idx: ''
     }
   }
 
@@ -63,7 +63,7 @@
     transition={flyAndScale}
     sideOffset={8}
   >
-    {#each filteredItems as item (item.value.uid)}
+    {#each filteredItems as item (item.value.idx)}
       <Combobox.Item
         class="rounded-button flex h-8 w-full select-none items-center py-3 pl-5 pr-1.5 text-sm capitalize outline-none transition-all duration-75 data-[highlighted]:rounded-md data-[highlighted]:bg-muted"
         value={item.value}

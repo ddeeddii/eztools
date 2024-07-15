@@ -3,13 +3,14 @@
   import { Button } from '$lib/components/ui/button'
   import ItemContainer from './ItemContainer.svelte'
   import { randAnimal, randTextRange } from '@ngneat/falso'
-  import { ItemType, type Item, uid, ItemData, SearchableItems } from '../data/dataManager'
+  import { ItemType, type Item, ItemData, SearchableItems } from '../data/dataManager'
   import { flyAndScale } from '@/utils.js'
   import PersistentDialog from '@/components/ui/persistent-dialog/persistent-dialog.svelte'
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
   import Fuse from 'fuse.js'
   import { Config } from '../data/configManager.js'
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
+  import { v4 as uuidv4 } from 'uuid'
 
   function createItem() {
     if (import.meta.env.DEV) {
@@ -21,7 +22,7 @@
           description: randTextRange({ min: 10, max: 100 }),
           sprite: null,
           useCustomOrigin: false,
-          uid: $uid,
+          uid: uuidv4(),
           open: false
         }
 
@@ -31,10 +32,9 @@
           value: {
             type: ItemType.Unset,
             id: '',
-            uid: $uid.toString()
+            idx: uuidv4()
           }
         })
-        $uid++
       }
     } else {
       const item: Item = {
@@ -44,7 +44,7 @@
         description: '',
         sprite: null,
         useCustomOrigin: false,
-        uid: $uid,
+        uid: uuidv4(),
         open: false
       }
 
@@ -54,10 +54,9 @@
         value: {
           type: ItemType.Unset,
           id: '',
-          uid: $uid.toString()
+          idx: uuidv4()
         }
       })
-      $uid++
     }
   }
 

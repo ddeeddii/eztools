@@ -5,6 +5,6 @@ export interface searchItem {
   value: {
     type: ItemType,
     id: string,
-    uid: string // Used to index the searched items
+    idx: string // Used to index the searched items, uuidv4 is used for this
   }
 }

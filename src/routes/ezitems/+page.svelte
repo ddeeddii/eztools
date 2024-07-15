@@ -5,7 +5,7 @@
   import AlertDialog from '@/components/ui/global-alert-dialog/AlertDialog.svelte'
   import ItemManager from './components/ItemManager.svelte'
   import Menu from './components/Menu.svelte'
-  import { ItemData } from './data/dataManager'
+  import { ItemData, SearchableItems } from './data/dataManager'
   import { Toaster } from '$lib/components/ui/sonner'
 </script>
 
@@ -15,7 +15,9 @@
   <div
     class="flex h-4/5 w-11/12 flex-col items-center justify-start rounded-lg border shadow-sm lg:w-3/5"
   >
-    <Button class="mt-2 p-6 text-xl " on:click={() => console.log($ItemData)}>Download</Button>
+    <Button class="mt-2 p-6 text-xl " on:click={() => console.log($ItemData, $SearchableItems)}
+      >Download</Button
+    >
     <Menu />
 
     <div class="mt-12 flex w-full max-w-lg flex-col gap-1.5 px-4">

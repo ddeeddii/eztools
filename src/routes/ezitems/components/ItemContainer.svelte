@@ -22,6 +22,7 @@
   import { Button } from '$lib/components/ui/button'
   import { Config, TemplateType } from '$ezitems/data/configManager.js'
   import { toast } from 'svelte-sonner'
+  import { onMount } from 'svelte'
 
   export let item: Item
   const displayItemTypeText = ['Unset', 'Item', 'Trinket', 'Pocket Item']
@@ -85,8 +86,23 @@
   let rawFileList = item.sprite === null ? undefined : item.sprite
   $: item.sprite = rawFileList === undefined ? null : rawFileList
 
-  // both arrays must be in sync in order for this to work
-  $: $SearchableItems[item.uid].label = item.name
+  let searchableItem: searchItem
+  onMount(() => {
+    let match = $SearchableItems.find(
+      (si) => si.value.id === item.originItemId && si.value.type === item.type
+    )
+    if (match) {
+      searchableItem = match
+    } else {
+      toast.error(
+        'Item could not be found in the searchable items - enable dev mode and send a bug report'
+      )
+    }
+  })
+
+  function onNameChange() {
+    searchableItem.label = item.name
+  }
 
   let selectedCustomType = {
     value: item.type,
@@ -155,6 +171,7 @@
         <Label for="item name">Item Name</Label>
         <Input
           bind:value={item.name}
+          on:change={onNameChange}
           class="h-12 sm:h-10"
           type="text"
           id="item name"

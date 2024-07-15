@@ -19,7 +19,7 @@ export interface Item {
   description: string
 
   sprite: FileList | null
-  uid: number
+  uid: string
   useCustomOrigin: boolean
   open: boolean
 }
@@ -29,6 +29,7 @@ import trinkets from './trinkets.json'
 import pocketitems from './pocketitems.json'
 import pills from './pills.json'
 import type { searchItem } from '@/index.js'
+import { v4 as uuidv4 } from 'uuid';
 
 export const ItemDb = items
 export const TrinketDb = trinkets
@@ -43,7 +44,7 @@ for (const [id, data] of Object.entries(items)) {
     value: {
       type: ItemType.Item,
       id: id,
-      uid: `i${id}`
+      idx: uuidv4()
     }
   }
   SearchableDb.push(item)
@@ -55,7 +56,7 @@ for (const [id, data] of Object.entries(trinkets)) {
     value: {
       type: ItemType.Trinket,
       id: id,
-      uid: `t${id}`
+      idx: uuidv4()
     }
   }
   SearchableDb.push(item)
@@ -67,7 +68,7 @@ for (const [id, data] of Object.entries(pocketitems)) {
     value: {
       type: ItemType.PocketItem,
       id: id,
-      uid: `p${id}`
+      idx: uuidv4()
     }
   }
   SearchableDb.push(item)
@@ -79,7 +80,7 @@ for (const [id, data] of Object.entries(pills)) {
     value: {
       type: ItemType.Pill,
       id: id,
-      uid: `pi${id}`
+      idx: uuidv4()
     }
   }
   SearchableDb.push(item)
@@ -104,32 +105,27 @@ export function getSearchableItem(item: Item): searchItem {
       value: {
         type: item.type,
         id: item.originItemId,
-        uid: `co-${item.name}` // note: could potentially collide with other items but its not a big deal
+        idx: uuidv4()
       }
     }
   }
   
   let baseItemName = ''
-  let uidPrefix = ''
   if (item.type === ItemType.Item) {
     baseItemName = ItemDb[item.originItemId as keyof typeof ItemDb].name
-    uidPrefix = 'i'
   } else if (item.type === ItemType.Trinket) {
     baseItemName = TrinketDb[item.originItemId as keyof typeof TrinketDb].name
-    uidPrefix = 't'
   } else if (item.type === ItemType.PocketItem) {
     baseItemName = PocketItemDb[item.originItemId as keyof typeof PocketItemDb].name
-    uidPrefix = "p"
   } else if (item.type === ItemType.Pill) {
     baseItemName = PillDb[item.originItemId as keyof typeof PillDb].name
-    uidPrefix = "pi"
   } else if (item.type === ItemType.Unset) {
     return {
       label: '',
       value: {
         type: ItemType.Unset,
         id: '',
-        uid: ''
+        idx: uuidv4()
       }
     }
   }
@@ -139,7 +135,7 @@ export function getSearchableItem(item: Item): searchItem {
     value: {
       type: item.type,
       id: item.originItemId,
-      uid: `${uidPrefix}${item.originItemId}`
+      idx: uuidv4()
     }
   }
 }

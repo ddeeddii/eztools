@@ -12,7 +12,7 @@ export interface StoredItem {
 
   sprite: FileList | null
   useCustomOrigin: boolean
-  uid: number
+  uid: string
   open: boolean
 }
 
