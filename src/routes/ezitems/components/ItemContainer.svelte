@@ -60,7 +60,7 @@
     item.originItemId = usedItem.value.id
 
     if (item.type === ItemType.PocketItem) {
-      rawFileList = undefined
+      rawItemSpriteFile = undefined
     }
 
     if (item.type === ItemType.Pill) {
@@ -83,8 +83,8 @@
     $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
   }
 
-  let rawFileList = item.sprite === null ? undefined : item.sprite
-  $: item.sprite = rawFileList === undefined ? null : rawFileList
+  let rawItemSpriteFile = item.sprite === null ? undefined : item.sprite
+  $: item.sprite = rawItemSpriteFile === undefined ? null : rawItemSpriteFile
 
   let searchableItem: searchItem
   onMount(() => {
@@ -227,7 +227,7 @@
         <ImageInput
           disabled={item.type === ItemType.PocketItem || item.type === ItemType.Pill}
           id="picture"
-          bind:files={rawFileList}
+          bind:file={rawItemSpriteFile}
           class="h-12 sm:h-10"
         />
       </div>

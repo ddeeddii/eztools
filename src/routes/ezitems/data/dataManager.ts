@@ -18,7 +18,7 @@ export interface Item {
   name: string
   description: string
 
-  sprite: FileList | null
+  sprite: File | null
   uid: string
   useCustomOrigin: boolean
   open: boolean
