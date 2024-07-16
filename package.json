@@ -49,6 +49,7 @@
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.15",
     "dexie": "^4.0.4",
+    "jszip": "^3.10.1",
     "lucide-svelte": "^0.344.0",
     "svelte-persisted-store": "^0.9.1",
     "svelte-sonner": "^0.3.24",

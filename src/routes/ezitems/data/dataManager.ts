@@ -30,6 +30,7 @@ import pocketitems from './pocketitems.json'
 import pills from './pills.json'
 import type { searchItem } from '@/index.js'
 import { v4 as uuidv4 } from 'uuid';
+import { isNumeric } from '@/utils.js'
 
 export const ItemDb = items
 export const TrinketDb = trinkets
@@ -86,10 +87,6 @@ for (const [id, data] of Object.entries(pills)) {
   SearchableDb.push(item)
 }
 
-function isNumeric(value: string) {
-  return /^-?\d+$/.test(value);
-}
-
 export type PocketItemSubType = 'tarot' | 'suit' | 'rune' | 'special' | 'object' | 'tarot_reverse'
 export function getPocketItemSubType(item: Item): PocketItemSubType {
   if(!isNumeric(item.originItemId as never)) {
@@ -139,8 +136,26 @@ export function getSearchableItem(item: Item): searchItem {
     }
   }
 }
-
 export function syncSearchableItems(items: Array<Item>) {
+  SearchableItems.set([])
+  for (const item of items) {
+    const searchableItem = {
+      label: item.name,
+      value: {
+        type: item.type,
+        id: item.originItemId,
+        idx: uuidv4()
+      }
+    }
+
+    SearchableItems.update((items) => {
+      items.push(searchableItem)
+      return items
+    })
+  }
+}
+
+export function regenerateSearchableItems(items: Array<Item>) {
   SearchableItems.set([])
   for (const item of items) {
     const searchableItem = getSearchableItem(item)
@@ -149,4 +164,29 @@ export function syncSearchableItems(items: Array<Item>) {
       return items
     })
   }
+}
+
+export interface ExportItem {
+  name: string,
+  description: string,
+}
+export interface ExportCard {
+  name: string,
+  description: string,
+  type: 'card' | 'rune' | 'soul'
+}
+
+export interface ExportData {
+  metadata: {
+    templateType: 'vanilla' | 'repentogon',
+    templateVersion: string,
+    dataVersion: string,
+    webVersion: string
+  },
+
+  // the key is the origin item id (number) OR a custom name (string)
+  items: Record<string, ExportItem>
+  trinkets: Record<string, ExportItem>
+  pills: Record<string, ExportItem>
+  cards: Record<string, ExportCard>
 }

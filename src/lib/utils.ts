@@ -58,3 +58,7 @@ export const flyAndScale = (
 // ts number clamp function
 export const clamp = (n: number, min: number, max: number) =>
   Math.min(Math.max(n, min), max)
+
+export function isNumeric(value: string) {
+  return /^-?\d+$/.test(value);
+}
