@@ -63,8 +63,11 @@
     readSavedImage()
   }
 
-  function removeImage() {
-    inputElement.value = ''
+  export let removeImage: () => void = () => {
+    if (inputElement) {
+      inputElement.value = ''
+    }
+
     imageUrl = ''
     inputText = defaultText
     files = undefined
@@ -102,7 +105,7 @@
     {/if}
 
     <span class:text-muted-foreground={inputText === defaultText || disabled}>
-      {disabled ? 'Sprite selection is disabled for this item type' : inputText}
+      {disabled ? 'Sprite selection is disabled' : inputText}
     </span>
   </Label>
 

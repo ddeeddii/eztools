@@ -59,13 +59,7 @@
     item.type = usedItem.value.type
     item.originItemId = usedItem.value.id
 
-    if (item.type === ItemType.PocketItem) {
-      rawItemSpriteFile = undefined
-    }
-
-    if (item.type === ItemType.Pill) {
-      item.description = ''
-    }
+    removeIncorrectItemParams()
   }
 
   function itemTypeMatchesTemplate(type: ItemType) {
@@ -83,6 +77,7 @@
     $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
   }
 
+  let removeSprite: () => void
   let rawItemSpriteFile = item.sprite === null ? undefined : item.sprite
   $: item.sprite = rawItemSpriteFile === undefined ? null : rawItemSpriteFile
 
@@ -110,12 +105,24 @@
     disabled: false
   }
 
+  function removeIncorrectItemParams() {
+    if (item.type === ItemType.PocketItem) {
+      removeSprite()
+    }
+
+    if (item.type === ItemType.Pill) {
+      removeSprite()
+      item.description = ''
+    }
+  }
+
   function onCustomOriginChange(value?: { value: ItemType; label?: string; disabled?: boolean }) {
     if (!value) {
       return
     }
 
     item.type = value.value
+    removeIncorrectItemParams()
   }
 
   function onToggleCustomOrigin() {
@@ -131,6 +138,7 @@
         disabled: false
       }
       item.originItemId = selectedItem.label
+      removeSprite()
     }
   }
 </script>
@@ -225,7 +233,10 @@
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
         <Label for="picture">Sprite</Label>
         <ImageInput
-          disabled={item.type === ItemType.PocketItem || item.type === ItemType.Pill}
+          disabled={item.type === ItemType.PocketItem ||
+            item.type === ItemType.Pill ||
+            item.useCustomOrigin}
+          bind:removeImage={removeSprite}
           id="picture"
           bind:file={rawItemSpriteFile}
           class="h-12 sm:h-10"
@@ -234,7 +245,6 @@
     </div>
     <div class="flex flex-col items-center justify-evenly gap-1.5 sm:flex-row">
       <span class="flex items-center gap-1.5">
-        <!-- TODO -->
         <Label for="custom-origin-switch">Custom Item Origin</Label>
         <Switch
           onCheckedChange={onToggleCustomOrigin}
