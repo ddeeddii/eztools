@@ -3,7 +3,7 @@
   import { Button } from '$lib/components/ui/button'
   import ItemContainer from './ItemContainer.svelte'
   import { randAnimal, randTextRange } from '@ngneat/falso'
-  import { ItemType, type Item, ItemData, SearchableItems } from '../data/dataManager'
+  import { ItemType, type Item, ItemData, SearchableItems, SearchableDb } from '../data/dataManager'
   import { flyAndScale } from '@/utils.js'
   import PersistentDialog from '@/components/ui/persistent-dialog/persistent-dialog.svelte'
   import Autocomplete from '@/components/ui/autocomplete/Autocomplete.svelte'
@@ -12,51 +12,50 @@
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
   import { v4 as uuidv4 } from 'uuid'
 
-  function createItem() {
-    if (import.meta.env.DEV) {
-      for (let i = 0; i < 100; i++) {
-        const item: Item = {
-          originItemId: '',
-          type: ItemType.Unset,
-          name: randAnimal(),
-          description: randTextRange({ min: 10, max: 100 }),
-          sprite: null,
-          useCustomOrigin: false,
-          uid: uuidv4(),
-          open: false
-        }
+  function generateItem() {
+    const item: Item = {
+      originItemId: '',
+      type: ItemType.Unset,
+      name: '',
+      description: '',
+      sprite: null,
+      useCustomOrigin: false,
+      uid: uuidv4(),
+      open: false
+    }
 
-        $ItemData = [...$ItemData, item]
-        $SearchableItems.push({
-          label: item.name,
-          value: {
-            type: ItemType.Unset,
-            id: '',
-            idx: uuidv4()
-          }
-        })
+    if ($Config.DevMode.Enabled && $Config.DevMode.UseDummyItems) {
+      item.name = randAnimal()
+      item.description = randTextRange({ min: 10, max: 100 })
+      const randomSearchableItem = SearchableDb[Math.floor(Math.random() * SearchableDb.length)]
+      item.originItemId = randomSearchableItem.value.id
+      item.type = randomSearchableItem.value.type
+    }
+
+    return item
+  }
+
+  function addItemToData(item: Item) {
+    $ItemData = [...$ItemData, item]
+    $SearchableItems.push({
+      label: item.name,
+      value: {
+        type: item.type,
+        id: item.originItemId,
+        idx: uuidv4()
+      }
+    })
+  }
+
+  function createItem() {
+    if ($Config.DevMode.Enabled) {
+      for (let i = 0; i < $Config.DevMode.ItemsToGenerate; i++) {
+        const item = generateItem()
+        addItemToData(item)
       }
     } else {
-      const item: Item = {
-        originItemId: '',
-        type: ItemType.Unset,
-        name: '',
-        description: '',
-        sprite: null,
-        useCustomOrigin: false,
-        uid: uuidv4(),
-        open: false
-      }
-
-      $ItemData = [...$ItemData, item]
-      $SearchableItems.push({
-        label: item.name,
-        value: {
-          type: ItemType.Unset,
-          id: '',
-          idx: uuidv4()
-        }
-      })
+      const item = generateItem()
+      addItemToData(item)
     }
   }
 

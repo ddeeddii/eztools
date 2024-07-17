@@ -7,6 +7,13 @@
   import Menu from './components/Menu.svelte'
   import { ItemData, SearchableItems } from './data/dataManager'
   import { Toaster } from '$lib/components/ui/sonner'
+  import { Config } from './data/configManager'
+
+  function downloadMod() {
+    if ($Config.DevMode.Enabled) {
+      console.log($ItemData, $SearchableItems)
+    }
+  }
 </script>
 
 <Toaster />
@@ -15,9 +22,7 @@
   <div
     class="flex h-4/5 w-11/12 flex-col items-center justify-start rounded-lg border shadow-sm lg:w-3/5"
   >
-    <Button class="mt-2 p-6 text-xl " on:click={() => console.log($ItemData, $SearchableItems)}
-      >Download</Button
-    >
+    <Button class="mt-2 p-6 text-xl " on:click={downloadMod}>Download</Button>
     <Menu />
 
     <div class="mt-12 flex w-full max-w-lg flex-col gap-1.5 px-4">

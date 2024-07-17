@@ -51,7 +51,6 @@
     }
 
     if (!itemTypeMatchesTemplate(usedItem.value.type)) {
-      toast.error('Pocket items are only supported in the REPENTOGON template')
       selectedItem = getSearchableItem(item) // reset selected item
       return
     }
@@ -77,7 +76,12 @@
     $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
   }
 
-  let removeSprite: () => void
+  let removeSpriteInternal: () => void
+  function removeSprite() {
+    if (item.sprite !== null) {
+      removeSpriteInternal()
+    }
+  }
   let rawItemSpriteFile = item.sprite === null ? undefined : item.sprite
   $: item.sprite = rawItemSpriteFile === undefined ? null : rawItemSpriteFile
 
@@ -90,7 +94,7 @@
       searchableItem = match
     } else {
       toast.error(
-        'Item could not be found in the searchable items - enable dev mode and send a bug report'
+        'Item could not be found in the searchable items - please save current data and send a bug report'
       )
     }
   })
@@ -236,7 +240,7 @@
           disabled={item.type === ItemType.PocketItem ||
             item.type === ItemType.Pill ||
             item.useCustomOrigin}
-          bind:removeImage={removeSprite}
+          bind:removeImage={removeSpriteInternal}
           id="picture"
           bind:file={rawItemSpriteFile}
           class="h-12 sm:h-10"

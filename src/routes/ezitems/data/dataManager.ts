@@ -96,7 +96,7 @@ export function getPocketItemSubType(item: Item): PocketItemSubType {
 }
 
 export function getSearchableItem(item: Item): searchItem {
-  if (!isNumeric(item.originItemId as never)) { // item is using custom origin
+  if (item.useCustomOrigin) {
     return {
       label: item.name,
       value: {

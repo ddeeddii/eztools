@@ -12,6 +12,7 @@
   import ResetSettingsButton from './menu/settings/ResetSettingsButton.svelte'
   import InfoPage from './menu/InfoPage.svelte'
   import DataPage from './menu/DataPage.svelte'
+  import EnableDevMode from './menu/settings/EnableDevMode.svelte'
 
   let menuState = false
 </script>
@@ -39,6 +40,7 @@
             <ThresholdSetting />
             <MaxSuggestionsSetting />
             <AllowInvalidSpriteSetting />
+            <EnableDevMode />
             <div class="flex justify-center">
               <ResetSettingsButton bind:menuState />
             </div>

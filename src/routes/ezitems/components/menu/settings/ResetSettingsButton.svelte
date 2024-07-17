@@ -15,6 +15,7 @@
     $Config.AutocompleteThreshold = DefaultConfig.AutocompleteThreshold
     $Config.ExportTemplate = DefaultConfig.ExportTemplate
     $Config.Minify = DefaultConfig.Minify
+    $Config.DevMode = DefaultConfig.DevMode
   }
 
   function showResetSettingsDialog() {
