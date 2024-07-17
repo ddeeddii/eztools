@@ -28,7 +28,7 @@ export class StoredItemDb extends Dexie {
   SavedItems!: Table<StoredData>
 
   constructor() {
-    super('myDatabase')
+    super('EzItemsData')
     this.version(1).stores({
       SavedItems: '++id, name, description, date, items'
     })
