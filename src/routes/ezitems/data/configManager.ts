@@ -6,7 +6,7 @@ export enum TemplateType {
 
 export interface Config {
   ExportTemplate: TemplateType,
-  Minify: {Template: boolean, Data: boolean},
+  Minify: {Template: boolean},
 
   AutocompleteThreshold: number,
   AutocompleteMaxResults: number,
@@ -15,7 +15,7 @@ export interface Config {
 
 export const DefaultConfig: Config = {
   ExportTemplate: TemplateType.Vanilla,
-  Minify: {Template: false, Data: true},
+  Minify: {Template: false},
   AutocompleteThreshold: 0.3,
   AutocompleteMaxResults: 10,
   AllowInvalidSprite: false,
