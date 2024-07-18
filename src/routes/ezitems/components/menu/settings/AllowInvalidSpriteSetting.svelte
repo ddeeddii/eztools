@@ -11,6 +11,6 @@
   </span>
 
   <div slot="input" class="flex w-48 justify-around">
-    <Switch bind:checked={$Config.AllowInvalidSprite} id="custom-name-switch" />
+    <Switch bind:checked={$Config.AllowInvalidSprite} name="custom-name-switch" />
   </div>
 </SettingCard>

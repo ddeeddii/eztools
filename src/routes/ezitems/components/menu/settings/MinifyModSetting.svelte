@@ -12,6 +12,6 @@
   </span>
 
   <div slot="input" class="flex w-48 justify-around">
-    <Switch id="template-min-switch" bind:checked={$Config.Minify.Template} />
+    <Switch name="template-minify-switch" bind:checked={$Config.Minify.Template} />
   </div>
 </SettingCard>

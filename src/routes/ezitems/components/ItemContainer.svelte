@@ -208,11 +208,11 @@
       <div class="max-w-xxl w-full sm:px-4">
         {#if item.useCustomOrigin === true}
           <div class="grid grid-cols-2 gap-1.5">
-            <Label for="hi">Origin Item Type</Label>
-            <Label for="there">Origin Item Name</Label>
+            <Label for="origin-type-select">Origin Item Type</Label>
+            <Label for="origin-name-input">Origin Item Name</Label>
 
             <Select.Root onSelectedChange={onCustomOriginChange} bind:selected={selectedCustomType}>
-              <Select.Trigger class="h-12 sm:h-10">
+              <Select.Trigger class="h-12 sm:h-10" id="origin-type-select">
                 <Select.Value placeholder="Item Type" />
               </Select.Trigger>
               <Select.Content>
@@ -224,12 +224,17 @@
               </Select.Content>
             </Select.Root>
 
-            <Input bind:value={item.originItemId} id="there" class="h-12 sm:h-10" />
+            <Input bind:value={item.originItemId} id="origin-name-input" class="h-12 sm:h-10" />
           </div>
         {:else}
           <div class="flex flex-col gap-1.5">
-            <Label for="origin">Origin Item</Label>
-            <Autocomplete class="h-12 sm:h-10" data={SearchableDb} bind:selected={selectedItem} />
+            <Label for="origin-autocomplete">Origin Item</Label>
+            <Autocomplete
+              id="origin-autocomplete"
+              class="h-12 sm:h-10"
+              data={SearchableDb}
+              bind:selected={selectedItem}
+            />
           </div>
         {/if}
       </div>
@@ -251,6 +256,7 @@
       <span class="flex items-center gap-1.5">
         <Label for="custom-origin-switch">Custom Item Origin</Label>
         <Switch
+          name="custom origin switch"
           onCheckedChange={onToggleCustomOrigin}
           bind:checked={item.useCustomOrigin}
           id="custom-origin-switch"

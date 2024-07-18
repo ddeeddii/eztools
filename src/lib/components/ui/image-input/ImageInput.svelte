@@ -91,6 +91,8 @@
     on:change={getImage}
     hidden
   />
+{:else}
+  <input {id} hidden />
 {/if}
 
 <div class={`flex ${disabled ? 'opacity-50' : ''}`}>

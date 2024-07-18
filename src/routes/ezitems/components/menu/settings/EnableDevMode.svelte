@@ -14,7 +14,7 @@
   </span>
 
   <div slot="input" class="flex w-48 justify-around">
-    <Switch id="template-min-switch" bind:checked={$Config.DevMode.Enabled} />
+    <Switch name="dev-mode-switch" bind:checked={$Config.DevMode.Enabled} />
   </div>
 </SettingCard>
 
@@ -30,6 +30,7 @@
     <div slot="input" class="flex w-48 justify-around">
       <Input
         bind:value={$Config.DevMode.ItemsToGenerate}
+        name="dev-mode-items-to-generate"
         slot="input"
         type="number"
         step="1"
@@ -47,7 +48,7 @@
     </span>
 
     <div slot="input" class="flex w-48 justify-around">
-      <Switch id="template-min-switch" bind:checked={$Config.DevMode.UseDummyItems} />
+      <Switch name="dev-mode-use-dummy-items" bind:checked={$Config.DevMode.UseDummyItems} />
     </div></SettingCard
   >
 {/if}

@@ -15,6 +15,7 @@
     <br />Range: <code>1</code> - <code>20</code></span
   >
   <Input
+    name="autocomplete-max-results"
     bind:value={displayedMaxResults}
     slot="input"
     type="number"

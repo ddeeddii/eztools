@@ -18,6 +18,7 @@
     <code>1.0</code> (matching anything)
   </span>
   <Input
+    name="autocomplete-threshold"
     bind:value={displayedThreshold}
     slot="input"
     type="number"
