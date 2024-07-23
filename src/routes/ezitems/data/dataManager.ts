@@ -24,12 +24,12 @@ export interface Item {
   open: boolean
 }
 
-import items from './items.json'
-import trinkets from './trinkets.json'
-import pocketitems from './pocketitems.json'
-import pills from './pills.json'
+import items from '@/assets/ezitems/items.json'
+import trinkets from '@/assets/ezitems/trinkets.json'
+import pocketitems from '@/assets/ezitems/pocketitems.json'
+import pills from '@/assets/ezitems/pills.json'
 import type { searchItem } from '@/index.js'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 import { isNumeric } from '@/utils.js'
 
 export const ItemDb = items
