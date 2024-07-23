@@ -9,26 +9,26 @@ This file describes the data format used by EzItems mods. It is a JSON file with
 ```json
 {
   "metadata": {
-    "templateType": "vanilla" | "repentogon",
+    "templateType": "vanilla | repentogon",
     "templateVersion": "1.0.0",
     "dataVersion": "1.0.0",
     "webVersion": "1.0.0"
   },
 
   "items": {
-    "item-id": { "name": "", "description": "" },
+    "item-id": { "name": "", "description": "" }
   },
 
   "trinkets": {
-    "item-id": { "name": "", "description": "" },
+    "item-id": { "name": "", "description": "" }
   },
 
   "cards": {
-    "item-id": { "name": "", "description": "", "type": "card" | "rune" | "soul" },
+    "item-id": { "name": "", "description": "", "type": "card | rune | soul" }
   },
 
   "pills": {
-    "item-id": { "name": "", "description": "" },
+    "item-id": { "name": "", "description": "" }
   }
 }
 ```
