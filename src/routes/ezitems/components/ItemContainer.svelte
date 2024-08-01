@@ -228,9 +228,9 @@
           </div>
         {:else}
           <div class="flex flex-col gap-1.5">
-            <Label for="origin-autocomplete">Origin Item</Label>
+            <Label>Origin Item</Label>
             <Autocomplete
-              id="origin-autocomplete"
+              name="origin-autocomplete"
               class="h-12 sm:h-10"
               data={SearchableDb}
               bind:selected={selectedItem}
