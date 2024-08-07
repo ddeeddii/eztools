@@ -74,6 +74,7 @@
 
   function deleteItem() {
     $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
+    $SearchableItems = $SearchableItems.filter((i) => searchableItem !== i)
   }
 
   let removeSpriteInternal: () => void
