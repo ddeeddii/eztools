@@ -180,24 +180,24 @@
   <Collapsible.Content class="mx-4 mb-4">
     <div class="grid grid-cols-1 grid-rows-4 sm:grid-cols-2 sm:grid-rows-2">
       <div class="max-w-xxl mb-4 mr-4 flex w-full flex-col gap-1.5 sm:px-4">
-        <Label for="item name">Item Name</Label>
+        <Label for={`item-name-${item.uid}`}>Item Name</Label>
         <Input
           bind:value={item.name}
           on:change={onNameChange}
           class="h-12 sm:h-10"
           type="text"
-          id="item name"
+          id={`item-name-${item.uid}`}
           placeholder="New name "
         />
       </div>
 
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
-        <Label for="item description">Item Description</Label>
+        <Label for={`item-description-${item.uid}`}>Item Description</Label>
         <Input
           bind:value={item.description}
           class="h-12 sm:h-10"
           type="text"
-          id="item description"
+          id={`item-description-${item.uid}`}
           disabled={item.type === ItemType.Pill}
           placeholder={item.type === ItemType.Pill
             ? 'Description is disabled for this item type'
@@ -228,9 +228,9 @@
           </div>
         {:else}
           <div class="flex flex-col gap-1.5">
-            <Label>Origin Item</Label>
+            <Label for={`origin-item-${item.uid}`}>Origin Item</Label>
             <Autocomplete
-              name="origin-autocomplete"
+              id={`origin-item-${item.uid}`}
               class="h-12 sm:h-10"
               data={SearchableDb}
               bind:selected={selectedItem}
@@ -240,13 +240,13 @@
       </div>
 
       <div class="max-w-xxl flex w-full flex-col gap-1.5">
-        <Label for="picture">Sprite</Label>
+        <Label for={`sprite-${item.uid}`}>Sprite</Label>
         <ImageInput
           disabled={item.type === ItemType.PocketItem ||
             item.type === ItemType.Pill ||
             item.useCustomOrigin}
           bind:removeImage={removeSpriteInternal}
-          id="picture"
+          id={`sprite-${item.uid}`}
           bind:file={rawItemSpriteFile}
           class="h-12 sm:h-10"
         />

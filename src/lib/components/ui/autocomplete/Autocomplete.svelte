@@ -16,7 +16,7 @@
     }
   }
 
-  export let name = 'autocomplete'
+  export let id = 'autocomplete'
   export let defaultText = 'Select an item'
   export let emptyText = 'No items found'
   export let data: Array<searchItem> = []
@@ -75,5 +75,5 @@
       <span class="block px-5 py-2 text-sm text-muted-foreground"> {emptyText} </span>
     {/each}
   </Combobox.Content>
-  <Combobox.HiddenInput {name} />
+  <Combobox.HiddenInput {id} />
 </Combobox.Root>

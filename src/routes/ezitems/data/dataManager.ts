@@ -170,9 +170,8 @@ export interface ExportItem {
   name: string,
   description: string,
 }
-export interface ExportCard {
-  name: string,
-  description: string,
+
+export interface ExportCard extends ExportItem {
   type: 'card' | 'rune' | 'soul'
 }
 

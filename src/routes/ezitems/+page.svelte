@@ -8,11 +8,28 @@
   import { ItemData, SearchableItems } from './data/dataManager'
   import { Toaster } from '$lib/components/ui/sonner'
   import { Config } from './data/configManager'
+  import { getModZip } from './data/modDownload'
+  import { toast } from 'svelte-sonner'
 
-  function downloadMod() {
+  let modName = ''
+  let modFolderName = ''
+
+  async function downloadMod() {
     if ($Config.DevMode.Enabled) {
       console.log($ItemData, $SearchableItems)
     }
+
+    if (modName === '' || modFolderName === '') {
+      toast.error('Mod Name and Folder Name are required to export the mod')
+      return
+    }
+
+    if ($ItemData.length === 0) {
+      toast.error('Cannot export a mod with no items')
+      return
+    }
+
+    await getModZip(modName, modFolderName)
   }
 </script>
 
@@ -27,12 +44,19 @@
 
     <div class="mt-12 flex w-full max-w-lg flex-col gap-1.5 px-4">
       <Label for="mod name">Mod Name</Label>
-      <Input class="h-12 lg:h-10" type="text" id="mod name" placeholder="Internal mod name" />
+      <Input
+        bind:value={modName}
+        class="h-12 lg:h-10"
+        type="text"
+        id="mod name"
+        placeholder="Internal mod name"
+      />
     </div>
 
     <div class="mt-4 flex w-full max-w-lg flex-col gap-1.5 px-4">
       <Label for="folder name">Folder Name</Label>
       <Input
+        bind:value={modFolderName}
         class="h-12 lg:h-10"
         type="text"
         id="folder name"

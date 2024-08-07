@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "templateType": "vanilla",
+    "templateVersion": "1.0.0",
+    "dataVersion": "1.0.0",
+    "webVersion": "1.0.0"
+  },
+
+  "items": {
+    "1": { "name": "item name", "description": "item description" },
+    "Big Bomba": { "name": "item name", "description": "item description" }
+  },
+
+  "trinkets": {
+    "1": { "name": "trinket name", "description": "trinket description" },
+    "Stinka Poopa": { "name": "trinket name", "description": "trinket description" }
+  },
+
+  "cards": {
+    "1": { "name": "card name", "description": "card description", "type": "card" },
+    "35": { "name": "rune name", "description": "rune description", "type": "rune" },
+    "81": { "name": "soul name", "description": "soul description", "type": "soul" },
+    "Grenade": { "name": "card name", "description": "card description", "type": "card" }
+  },
+
+  "pills": {
+    "1": { "name": "pill name", "description": "pill description"}
+  }
+}
