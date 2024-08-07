@@ -182,7 +182,7 @@
   async function displayAlert() {
     showAlertDialog(() => {
       modUploadInput.click()
-    }, 'This action will overwrite all of your current item data. After clicking "Confirm", please select a zip file containing an EzItems mod folder.')
+    }, 'This action will overwrite all of your current item data.\nAfter clicking "Confirm", please select a zip file containing an EzItems mod folder.')
   }
 
   function deleteAllItems() {

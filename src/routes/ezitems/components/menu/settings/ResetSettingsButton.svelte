@@ -21,7 +21,7 @@
   function showResetSettingsDialog() {
     showAlertDialog(
       resetSettings,
-      'This action cannot be undone. This will reset all settings to their default values. The menu will close after this action.',
+      'This action cannot be undone.\nThis will reset all settings to their default values.\nThe menu will close after this action.',
       'Reset'
     )
   }

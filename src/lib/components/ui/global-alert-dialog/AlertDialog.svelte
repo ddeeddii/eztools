@@ -28,7 +28,7 @@
   <AlertDialog.Content>
     <AlertDialog.Header>
       <AlertDialog.Title>{dialog.title}</AlertDialog.Title>
-      <AlertDialog.Description>
+      <AlertDialog.Description class="whitespace-pre-line">
         {dialog.description}
       </AlertDialog.Description>
     </AlertDialog.Header>
