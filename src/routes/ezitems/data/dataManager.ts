@@ -29,7 +29,7 @@ import trinkets from '@/assets/ezitems/trinkets.json'
 import pocketitems from '@/assets/ezitems/pocketitems.json'
 import pills from '@/assets/ezitems/pills.json'
 import type { searchItem } from '@/index.js'
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4, v4 } from 'uuid'
 import { isNumeric } from '@/utils.js'
 
 export const ItemDb = items
@@ -188,4 +188,22 @@ export interface ExportData {
   trinkets: Record<string, ExportItem>
   pills: Record<string, ExportItem>
   cards: Record<string, ExportCard>
+}
+
+export function getMockItem(params?: Partial<Item>): Item {
+  if (!params) {
+    params = {}
+  }
+  
+  return {
+    originItemId: params.originItemId ?? '',
+    type: params.type ?? ItemType.Unset,
+    name: params.name ?? '',
+    description: params.description ?? '',
+  
+    sprite: params.sprite ?? null,
+    uid: params.uid ?? v4(),
+    useCustomOrigin: params.useCustomOrigin ?? false,
+    open: params.open ?? false
+  }
 }

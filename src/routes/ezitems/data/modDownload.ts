@@ -1,6 +1,6 @@
-const templateVersion = '1.0.0'
-const dataVersion = '1.0.0'
-const webVersion = '1.0.0'
+export const templateVersion = '1.0.0'
+export const dataVersion = '1.0.0'
+export const webVersion = '1.0.0'
 
 import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?raw'
 import repentogon from '$lib/assets/ezitems/templates/repentogon.lua?raw'
@@ -34,13 +34,13 @@ export async function getModZip(modName: string, modFolderName: string) {
   const mainZip = new JSZip()
 
   mainZip.file(`${modFolderName}/main.lua`, processTemplate(config, modName))
-  mainZip.file(`${modFolderName}/data.lua`, `return '${JSON.stringify(processData(config))}'`)
+  mainZip.file(`${modFolderName}/data.lua`, `return '${JSON.stringify(processData(config, get(ItemData)))}'`)
   await saveSprites(get(ItemData), mainZip, modFolderName)
 
   saveBlob(await mainZip.generateAsync({ type: 'blob' }), `${modName}.zip`)
 }
 
-function processTemplate(config: Config, modName: string) {
+export function processTemplate(config: Config, modName: string) {
   let template = Template[config.ExportTemplate]
   template = template.replace('%modname%', modName)
 
@@ -66,7 +66,7 @@ const TemplateTypeToExportType: Record<TemplateType, 'vanilla' | 'repentogon'> =
   1: 'repentogon'
 }
 
-function getExportPocketItemSubType(item: Item): 'card' | 'rune' | 'soul' {
+export function getExportPocketItemSubType(item: Item): 'card' | 'rune' | 'soul' {
   if (item.name.startsWith('Soul of ')) {
     return 'soul'
   }
@@ -78,7 +78,7 @@ function getExportPocketItemSubType(item: Item): 'card' | 'rune' | 'soul' {
   return 'card'
 }
 
-function processData(config: Config) {
+export function processData(config: Config, itemData: Array<Item>) {
   const exportData: ExportData = {
     metadata: {
       templateType: TemplateTypeToExportType[config.ExportTemplate],
@@ -93,7 +93,6 @@ function processData(config: Config) {
     pills: {}
   }
 
-  const itemData = get(ItemData)
   console.log(itemData)
   console.log('hi')
 
