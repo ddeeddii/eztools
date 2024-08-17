@@ -52,6 +52,7 @@
     "jszip": "^3.10.1",
     "luamin": "^1.0.4",
     "lucide-svelte": "^0.344.0",
+    "svelte-markdown": "^0.4.1",
     "svelte-persisted-store": "^0.9.1",
     "svelte-sonner": "^0.3.24",
     "tailwind-merge": "^2.2.1",

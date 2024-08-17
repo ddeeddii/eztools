@@ -80,4 +80,13 @@
   code {
     @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono
   }
+
+  ol, ul {
+    list-style: revert;
+    padding: revert;
+  }
+
+  .highlight-links a {
+    @apply underline underline-offset-2;
+  }
 }
