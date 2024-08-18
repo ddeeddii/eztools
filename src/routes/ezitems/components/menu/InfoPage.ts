@@ -9,7 +9,7 @@ export function getParsedFaq(){
   return parsedSections
 }
 
-function getSections(tokens: Array<marked.Token>): Array<Array<marked.Token>> {
+export function getSections(tokens: Array<marked.Token>): Array<Array<marked.Token>> {
   const sections: Array<Array<marked.Token>> = []
   
   let lastSectionStartIndex = 0
@@ -39,7 +39,7 @@ export interface Section {
   content: Array<Article>
 }
 
-function parseSections(sections: Array<Array<marked.Token>>) {
+export function parseSections(sections: Array<Array<marked.Token>>) {
   const parsedSections: Array<Section> = []
 
   for (const section of sections) {
@@ -47,25 +47,49 @@ function parseSections(sections: Array<Array<marked.Token>>) {
     const title = heading.text
 
     const content: Array<Article> = []
-
-    let lastSpaceIndex = 0
+ 
     const currentSection = section.slice(1)
-
-    console.log('currentSection', currentSection)
+    
+    let currentArticle: Article = {
+      title: '',
+      content: []
+    }
 
     for (const [index, token] of currentSection.entries()) {
-      if (token.type === 'space')  {
-        const article = currentSection.slice(lastSpaceIndex, index)
-        lastSpaceIndex = index + 1
-
-        const heading = article[0] as marked.Tokens.Heading
+      if (token.type === 'heading' || index === currentSection.length - 1)  {
+        const heading = token as marked.Tokens.Heading
         const title = heading.text
-        
-        content.push({
-          title,
-          content: article.slice(1)
-        })
+
+        if (index === 0) { // start collecting
+          currentArticle.title = title
+          continue
+        }
+
+        if (index === currentSection.length - 1) {
+          if (token.type !== 'space') {
+            currentArticle.content.push(token)
+          }
+
+          content.push(currentArticle)
+          continue
+        } // push
+
+        // push
+        content.push(currentArticle)
+
+        // start collecting
+        currentArticle = {
+          title: title,
+          content: []
+        }
+
+      } else if (token.type !== 'space') {
+        currentArticle.content.push(token)
       }
+    }
+
+    if (currentArticle.content.length === 0) {
+      continue
     }
 
     parsedSections.push({
