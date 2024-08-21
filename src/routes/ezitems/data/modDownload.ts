@@ -48,7 +48,6 @@ export function processTemplate(config: Config, modName: string) {
     template = luamin.minify(template)
   }
 
-  console.log(template)
   return template
 }
 
@@ -92,9 +91,6 @@ export function processData(config: Config, itemData: Array<Item>) {
     cards: {},
     pills: {}
   }
-
-  console.log(itemData)
-  console.log('hi')
 
   for (const [, item] of Object.entries(itemData)) {
     if (item.type === ItemType.Unset) {
