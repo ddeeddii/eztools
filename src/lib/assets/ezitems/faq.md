@@ -1,27 +1,48 @@
+# General Information
+
+## What is EzItems?
+
+EzItems is a mod generator for Isaac that allows you to easily change the names, descriptions and sprites of vanilla items.
+
+## Why should I use it over renaming items in items.xml?
+
+Changing `items.xml` is a terrible idea because `items.xml` is not meant to be edited by mods. Changing this file will work for the time being, **however** if the game ever updates this file, any mod that relies on changing this file will overwrite the new changes.
+
+For example, if a new item is added to the game and you have a mod that still uses the old `items.xml`, the mod's old `items.xml` will overwrite the new one and the item will simply not exist in the game because it's not in the new `items.xml`.
+
+Another side effect of this file being "global" is that there may only exist one mod that changes this file. Only the mod that loads last will load its own `items.xml` and other mods' `items.xml` will be ignored.
+
+## Terminology
+
+**Origin Item** - An "origin item" is the item that is going to be changed.
+For example, if you wanted to change the name of "The Sad Onion", the origin item would be "The Sad Onion".
+
+**Custom Item Origin** - This is a setting that allows you to use a custom origin item. This is useful for more advanced users that wish to change the name of an item that is not in the vanilla game (like a modded item). Due to how custom items work, sprites are not supported for custom items.
+
 # Mod Templates
 
 ## What features does the REPENTOGON template add?
 
-- Partial support for pocket items - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed (EID is not supported for pills)
-- Built-in mod conflict notifier - if a mod is installed that changes the same item, a warning will be shown to the user
-- More frequent updates - [REPENTOGON](https://repentogon.com/) is constantly updated, unlike the vanilla game. Maintaining this template takes priority over the vanilla template because frankly there isn't a reason to not use it
+- Partial support for pocket items - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed (External Item Descriptions is not supported for pills)
+- Built-in mod conflict notifier - if a mod is installed that changes the same item, a warning will be shown in the console
 
 ## How are the mod templates different?
 
-There are currently 2 available templates:
-
-- `Vanilla`: Basic template that supports items and trinkets. Works in the vanilla game.
-- `REPENTOGON`: This template partially supports pocket items (pills, cards, runes, souls, etc.) and has a built-in mod conflict notifier. However, it **requires the user to have [REPENTOGON](https://repentogon.com/) installed**.
+- `Vanilla`: Supports items and trinkets. Works in the vanilla game.
+- `REPENTOGON`: Supports items, trinkets and partially supports pocket items (pills, cards, runes, souls, etc.). Also has a built-in mod conflict notifier. **Requires the user to have [REPENTOGON](https://repentogon.com/) installed**.
 
 ## Which one should I use?
 
-For most people, `REPENTOGON` is the better choice simply because it has more features (hence why it's the default template).
+It's mostly up to personal preference.
+
+- `REPENTOGON` is better because it has more features
+- `Vanilla` is better because it will always work, regardless of whether the player has REPENTOGON installed or not
 
 # REPENTOGON Support
 
 ## What features does the REPENTOGON template add?
 
-- **Partial support for pocket items** - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed (EID is not supported for pills)
+- **Partial support for pocket items** - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed (External Item Descriptions is not supported for pills)
 - **Built-in mod conflict notifier** - if a mod is installed that changes the same item, a warning will be shown to the user
 - **More frequent updates** - REPENTOGON is constantly updated, unlike the vanilla game. Maintaining it takes priority over the `Vanilla` template.
 
