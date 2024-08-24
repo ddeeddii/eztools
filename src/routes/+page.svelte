@@ -5,6 +5,14 @@
   import Bug from 'lucide-svelte/icons/bug'
 </script>
 
+<svelte:head>
+  <title>EzTools</title>
+  <meta content="EzTools" property="og:title" />
+  <meta content="Collection of Isaac mod tools" property="og:description" />
+  <meta content="https://isaac.d3d1.xyz/" property="og:url" />
+  <meta content="#242424" data-react-helmet="true" name="theme-color" />
+</svelte:head>
+
 <div class="flex justify-center">
   <Card.Root class="h- mt-12 w-4/5 sm:w-1/3">
     <Card.Header>

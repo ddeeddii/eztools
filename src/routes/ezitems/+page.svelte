@@ -42,6 +42,14 @@
   }
 </script>
 
+<svelte:head>
+  <title>EzItems</title>
+  <meta content="EzItems" property="og:title" />
+  <meta content="Item rename mod generator" property="og:description" />
+  <meta content="https://isaac.d3d1.xyz/" property="og:url" />
+  <meta content="#242424" data-react-helmet="true" name="theme-color" />
+</svelte:head>
+
 <Toaster />
 
 <div class="flex h-full justify-center pb-8 pt-8">

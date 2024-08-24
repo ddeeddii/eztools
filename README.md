@@ -1,38 +1,34 @@
-# create-svelte
+<p align="center">
+  <img src="https://i.imgur.com/bBnmDIZ.png" />
+</p>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+# EzTools
 
-## Creating a project
+Collection of mod tools for The Binding of Isaac: Repentance
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Usage
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+1. [Use online](https://isaac.d3d1.xyz) (recommended)
+2. Running locally via Node.js (clone this repository, run `npm install` and `npm run dev` or `npm run build` and `npm run start`)
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## EzItems
 
-## Developing
+Item rename tool. Supports:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Vanilla and modded items (via custom item origin setting)
+- Renaming items, trinkets, pocket items and pills
+- Changing descriptions of items, trinkets and pocket items
+- Changing sprites of items, trinkets and pocket items
+- Sprite validation (to ensure they work well in game)
+- Exporting generated mods as either vanilla mods or [REPENTOGON](https://repentogon.com/) mods
+- Storing item data locally in browser
+- Loading already generated mods from either `ezitems-web` or the new `EzItems`
+- Mod template minification
 
-```bash
-npm run dev
+# Help
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+If you have any questions or problems, please either [open an issue](https://github.com/ddeeddii/eztools/issues) with the appropriate label (`question` or `bug`) or dm me on Discord at `ddeeddii`
 
-## Building
+# Credits
 
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+**[Kittenchilly](https://steamcommunity.com/id/kittenchilly)** - `EzItems`'s vanilla template is based on their [mods](https://steamcommunity.com/sharedfiles/filedetails/?id=2606524433)
