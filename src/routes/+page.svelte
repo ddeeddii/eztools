@@ -6,13 +6,13 @@
 </script>
 
 <div class="flex justify-center">
-  <Card.Root class="h- mt-12 w-1/3">
+  <Card.Root class="h- mt-12 w-4/5 sm:w-1/3">
     <Card.Header>
       <Card.Title class="text-center text-6xl">EzTools</Card.Title>
       <Card.Description class="text-center">
         Collection of Isaac mod tools
 
-        <div class="mt-2 flex justify-evenly">
+        <div class="mt-2 flex flex-wrap justify-evenly">
           <Button
             href="https://github.com/ddeeddii/eztools"
             target="_blank"
