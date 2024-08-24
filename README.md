@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/bBnmDIZ.png" />
+  <img src="https://i.imgur.com/mTpIeqM.png" />
 </p>
 
 # EzTools
