@@ -20,14 +20,6 @@
       console.log($ItemData, $SearchableItems)
     }
 
-    if ($Config.ExportTemplate == TemplateType.Repentogon) {
-      showAlertDialog(async () => {
-        await getModZip(modName, modFolderName)
-      }, 'You are exporting a REPENTOGON mod.\nUsing this mod requires REPENTOGON to be installed.\n\nIf you wish to upload this mod to the Steam Workshop, please make sure to mark REPENTOGON as a dependency (for more help, check FAQ) or inform users in the mod description that it requires REPENTOGON.')
-
-      return
-    }
-
     if (modName === '' || modFolderName === '') {
       toast.error('Mod Name and Folder Name are required to export the mod')
       return
@@ -35,6 +27,14 @@
 
     if ($ItemData.length === 0) {
       toast.error('Cannot export a mod with no items')
+      return
+    }
+
+    if ($Config.ExportTemplate == TemplateType.Repentogon) {
+      showAlertDialog(async () => {
+        await getModZip(modName, modFolderName)
+      }, 'You are exporting a REPENTOGON mod.\nUsing this mod requires REPENTOGON to be installed.\n\nIf you wish to upload this mod to the Steam Workshop, please make sure to mark REPENTOGON as a dependency (for more help, check FAQ) or inform users in the mod description that it requires REPENTOGON.')
+
       return
     }
 

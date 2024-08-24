@@ -8,7 +8,8 @@
     description: '',
     actionText: '',
     onConfirm: () => {},
-    state: false
+    state: false,
+    additionalButtons: []
   }
 
   ShownDialog.subscribe((data) => {
@@ -35,6 +36,13 @@
     <AlertDialog.Footer>
       <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
       <AlertDialog.Action on:click={dialog.onConfirm}>{dialog.actionText}</AlertDialog.Action>
+      {#if dialog.additionalButtons.length > 0}
+        {#each dialog.additionalButtons as button}
+          <AlertDialog.Action on:click={button.onClick}>
+            {button.title}
+          </AlertDialog.Action>
+        {/each}
+      {/if}
     </AlertDialog.Footer>
   </AlertDialog.Content>
 </AlertDialog.Root>
