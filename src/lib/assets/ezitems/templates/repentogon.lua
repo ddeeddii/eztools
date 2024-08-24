@@ -1,5 +1,5 @@
 -- Generated with EzTools
--- isaac.d3d1.com/eztools
+-- isaac.d3d1.xyz
 
 local mod = RegisterMod('%modname%', 1)
 local data = include('data')
