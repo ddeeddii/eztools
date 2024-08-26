@@ -5,7 +5,7 @@
   import AlertDialog from '@/components/ui/global-alert-dialog/AlertDialog.svelte'
   import ItemManager from './components/ItemManager.svelte'
   import Menu from './components/Menu.svelte'
-  import { ItemData, SearchableItems } from './data/dataManager'
+  import { ItemData, ItemType, SearchableItems } from './data/dataManager'
   import { Toaster } from '$lib/components/ui/sonner'
   import { Config, TemplateType } from './data/configManager'
   import { getModZip } from './data/modDownload'
@@ -28,6 +28,13 @@
     if ($ItemData.length === 0) {
       toast.error('Cannot export a mod with no items')
       return
+    }
+
+    for (const item of $ItemData) {
+      if (item.originItemId === '' || item.type === ItemType.Unset) {
+        toast.warning('Some items in your mod have unset origin items. They will not be exported.')
+        break
+      }
     }
 
     if ($Config.ExportTemplate == TemplateType.Repentogon) {
