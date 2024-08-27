@@ -11,6 +11,7 @@
   import { Config } from '../data/configManager.js'
   import { ScrollArea } from '$lib/components/ui/scroll-area/index.js'
   import { v4 as uuidv4 } from 'uuid'
+  import { logger } from '@/logger'
 
   function generateItem() {
     const item: Item = {
@@ -52,6 +53,7 @@
       for (let i = 0; i < $Config.DevMode.ItemsToGenerate; i++) {
         const item = generateItem()
         addItemToData(item)
+        logger.info('generated item', item)
       }
     } else {
       const item = generateItem()

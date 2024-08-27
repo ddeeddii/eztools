@@ -23,6 +23,7 @@
   import { Config, TemplateType } from '$ezitems/data/configManager.js'
   import { toast } from 'svelte-sonner'
   import { onMount } from 'svelte'
+  import { logger } from '@/logger.js'
 
   export let item: Item
   const displayItemTypeText = ['Unset', 'Item', 'Trinket', 'Pocket Item']
@@ -52,6 +53,10 @@
 
     if (!itemTypeMatchesTemplate(usedItem.value.type)) {
       selectedItem = getSearchableItem(item) // reset selected item
+      toast.warning('Selected template does not support this item type!')
+      logger.warning(
+        `template ${$Config.ExportTemplate} does not support item type ${usedItem.value.type}`
+      )
       return
     }
 
@@ -73,8 +78,12 @@
   $: onSelectedItemChange(selectedItem)
 
   function deleteItem() {
+    logger.info('deleting item', item)
     $ItemData = $ItemData.filter((i) => i.uid !== item.uid)
     $SearchableItems = $SearchableItems.filter((i) => searchableItem !== i)
+    if ($ItemData.length === 0) {
+      window.onbeforeunload = null
+    }
   }
 
   let removeSpriteInternal: () => void
@@ -88,6 +97,8 @@
 
   let searchableItem: searchItem
   onMount(() => {
+    window.onbeforeunload = () => true
+
     let match = $SearchableItems.find(
       (si) => si.value.id === item.originItemId && si.value.type === item.type
     )
@@ -95,8 +106,9 @@
       searchableItem = match
     } else {
       toast.error(
-        'Item could not be found in the searchable items - please save current data and send a bug report'
+        'Item could not be found in the searchable items - please save current data and submit a bug report'
       )
+      logger.error('item not found in searchable items', item, match, $SearchableItems)
     }
   })
 

@@ -11,15 +11,12 @@
   import { getModZip } from './data/modDownload'
   import { toast } from 'svelte-sonner'
   import { showAlertDialog } from '@/components/ui/global-alert-dialog/AlertDialog'
+  import { logger } from '@/logger'
 
   let modName = ''
   let modFolderName = ''
 
   async function downloadMod() {
-    if ($Config.DevMode.Enabled) {
-      console.log($ItemData, $SearchableItems)
-    }
-
     if (modName === '' || modFolderName === '') {
       toast.error('Mod Name and Folder Name are required to export the mod')
       return

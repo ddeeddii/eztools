@@ -3,6 +3,18 @@
   import { Switch } from '$lib/components/ui/switch'
   import { Config } from '$ezitems/data/configManager.js'
   import { Input } from '$lib/components/ui/input'
+  import Button from '@/components/ui/button/button.svelte'
+  import { logger } from '@/logger'
+  import { ItemData, SearchableItems } from '$ezitems/data/dataManager'
+
+  function printDebug() {
+    logger.debug(
+      'debug data requested (itemdata, searchableitems, config)',
+      $ItemData,
+      $SearchableItems,
+      $Config
+    )
+  }
 </script>
 
 <SettingCard>
@@ -51,4 +63,15 @@
       <Switch name="dev-mode-use-dummy-items" bind:checked={$Config.DevMode.UseDummyItems} />
     </div></SettingCard
   >
+
+  <SettingCard>
+    <span slot="title" class="text-red-200">Print debug information</span>
+    <span slot="description"> Prints various useful debug information to the console. </span>
+
+    <div slot="input" class="flex w-48 justify-around">
+      <Button name="dev-mode-print-debug" variant="outline" on:click={printDebug}
+        >Print debug</Button
+      >
+    </div>
+  </SettingCard>
 {/if}

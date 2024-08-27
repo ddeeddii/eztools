@@ -12,6 +12,7 @@ import { toast } from 'svelte-sonner'
 import { v4 as uuidv4 } from 'uuid'
 import JSZip from 'jszip'
 import { get } from 'svelte/store'
+import { logger } from '@/logger'
 
 const jsonDataRegex = /'(.+)'/
 
@@ -28,6 +29,7 @@ export async function loadModData(files: FileList, version: 'default' | 'legacy'
 
   if (modFolderName === '') {
     toast.error('Invalid file selected - no mod folder found')
+    logger.error('no mod folder found', files)
     return
   }
 
@@ -61,6 +63,7 @@ async function loadDefaultData(
   const rawData = await modZip.file(modFolderName + 'data.lua')?.async('string')
   if (!rawData) {
     toast.error('Invalid file selected - failed to load data.lua file')
+    logger.error('failed to load data.lua file', modFolderName, modZip)
     return
   }
 
@@ -76,6 +79,7 @@ async function loadLegacyData(
   const rawData = await modZip.file(modFolderName + 'main.lua')?.async('string')
   if (!rawData) {
     toast.error('Invalid file selected - [LEGACY] failed to load main.lua file')
+    logger.error('failed to load legacy main.lua file', modFolderName, modZip)
     return
   }
 
@@ -94,6 +98,7 @@ function loadLegacyItems(
   
   if (trinketLine === -1) {
     toast.error('Invalid file selected - [LEGACY] failed to index trinkets table')
+    logger.error('failed to index trinkets table', rawData)
     return
   }
   
@@ -166,6 +171,7 @@ function loadItems(
 
   if (!match) {
     toast.error('Invalid file selected - invalid data.lua file format')
+    logger.error('invalid data.lua format', rawData)
     return
   }
 
@@ -180,7 +186,7 @@ function loadItems(
     loadItemTypeFromMod(ItemType.PocketItem, parsedData.cards, importedItemData, importedSprites)
   } catch (e) {
     toast.error('Invalid file selected - failed to parse data.lua json data')
-    console.log(e)
+    logger.error('failed to parse data.lua json data', e)
     return
   }
 }
@@ -209,12 +215,14 @@ export async function loadItemSprites(modZip: JSZip, modFolderName: string, type
 
     if (!spriteItemId) {
       toast.warning(`Error reading mod sprites - invalid sprite id: (${spriteName})`)
+      logger.warning(`invalid sprite id: (${spriteName})`)
       continue
     }
 
     const spriteRawData = modZip.file(relativePath)
     if (!spriteRawData) {
       toast.warning(`Error reading mod sprites - failed to load file: (${spriteName})`)
+      logger.warning(`failed to read raw file: (${spriteName})`)
       continue
     }
 
@@ -230,4 +238,5 @@ export function finishLoadingModData(importedItemData: Array<Item>) {
   syncSearchableItems(get(ItemData))
 
   toast.success(`Loaded ${importedItemData.length} item(s) from mod successfully!`)
+  logger.debug('imported item data', importedItemData)
 }

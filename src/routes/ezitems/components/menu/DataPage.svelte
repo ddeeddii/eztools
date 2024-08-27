@@ -19,6 +19,7 @@
   import { Label } from '$lib/components/ui/label/index.js'
   import { toast } from 'svelte-sonner'
   import { loadModData } from './DataPage'
+  import { logger } from '@/logger'
 
   let modUploadInput: HTMLInputElement
   let files: FileList
@@ -34,6 +35,7 @@
       return
     }
 
+    logger.debug('loading data from mod', version)
     loadModData(files, version)
   }
 
@@ -61,11 +63,13 @@
   function deleteAllItems() {
     regenerateSearchableItems([])
     $ItemData = []
+    logger.debug('deleted all items')
   }
 
   function deleteAllUnsetItems() {
     $ItemData = $ItemData.filter((i) => i.type !== ItemType.Unset)
     syncSearchableItems($ItemData)
+    logger.debug('deleted all unset items')
   }
 
   let name = ''
@@ -89,11 +93,13 @@
         items: $ItemData satisfies Array<StoredItem>
       })
     } catch (e) {
-      console.log(e)
+      logger.error('undefined error', e)
     }
 
     name = ''
     desc = ''
+
+    logger.debug('saved data', $ItemData)
   }
 
   let storedData = liveQuery(() => db.SavedItems.toArray())
