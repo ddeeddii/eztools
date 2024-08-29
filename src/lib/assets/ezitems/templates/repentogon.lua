@@ -33,7 +33,7 @@ local function addItem(id, name, description, type, cardVariant)
     EZITEMS[type][tostring(id)] = {}
   end
 
-  table.insert(EZITEMS[type][tostring(id)], {name = name, description = description, mod = mod.Name})
+  table.insert(EZITEMS[type][tostring(id)], {name = name, description = description, mod = mod.Name, modTemplate = 'repentogon'})
   if(type == 'cards') then
     changes[type][tostring(id)] = {name = name, description = description, type = cardVariant}
   else
@@ -74,29 +74,30 @@ local function parseJsonData()
   end
 end
 
-local eidFunctions = {
-  items = {
-   add = EID.addCollectible,
-   objId = 100
-  },
-  trinkets = {
-   add = EID.addTrinket,
-   objId = 350
-  },
-  cards = {
-   add = EID.addCard,
-   objId = 300
-  },
+local itemVariants = {
+  items = 100,
+  trinkets = 350,
+  cards = 300,
+  pills = 70
 }
+
 local function updateEid ()
   for type, itemTypeData in pairs(changes) do
     for id, itemData in pairs(itemTypeData) do
       if type == 'pills' then
+        EID:addDescriptionModifier(
+          'EZITEMS | ' .. tostring(mod.Name) .. ' | ' .. itemData.name,
+            function (descObj) return descObj.ObjType == 5 and descObj.ObjVariant == itemVariants.pills and descObj.Name == itemData.description end,
+            function (descObj) descObj.Name = itemData.name; return descObj end
+          )
         goto continue
       end
 
-      local EIDdescription = EID:getDescriptionObj(5, eidFunctions[type].objId, tonumber(id)).Description
-      eidFunctions[type].add(EID, tonumber(id), EIDdescription, itemData.name, 'en_us')
+      EID:addDescriptionModifier(
+        'EZITEMS | ' .. tostring(mod.Name) .. ' | ' .. itemData.name,
+        function (descObj) return descObj.ObjType == 5 and descObj.ObjVariant == itemVariants[type] and descObj.ObjSubType == tonumber(id) end,
+        function (descObj) descObj.Name = itemData.name; return descObj end
+      )
 
       ::continue::
     end
@@ -168,40 +169,38 @@ local function checkConflicts()
   for type, itemTypeData in pairs(changes) do
     for id, itemData in pairs(itemTypeData) do
       if EZITEMS[type][tostring(id)] then
-        for idx, conflict in pairs(EZITEMS[type][tostring(id)]) do
+        local removeOwn = false
+        for idx, conflict in ipairs(EZITEMS[type][tostring(id)]) do
           if conflict.mod ~= mod.Name then
-            if not conflict.resolved then
+            print('')
+            print('[ ' .. tostring(mod.Name) .. ' ]')
+            print('[ EzTools Conflict ] Item with id "' .. tostring(id) .. '" (name: "' .. itemData.name .. '") is already in use by mod "' .. conflict.mod .. '"')
+            print('[ EzTools Conflict ] Mod "' .. conflict.mod .. '" has higher priority, so "' .. mod.Name .. '"\'s item will not be loaded')
+            print('[ EzTools Conflict ] Summary: (' .. itemData.name .. ') -> (' .. conflict.name .. ')')
+            print('')
 
-              print('')
-              print('[ EzTools Error ] Item with id ' .. tostring(id) .. ' (name: ' .. itemData.name .. ') is already in use by mod ' .. conflict.mod)
-              print('[ EzTools Error ] Mod ' .. mod.Name .. ' has higher priority, so it will be used instead')
-              print('[ EzTools Error ] Summary: (' .. conflict.name .. ') -> (' .. itemData.name .. ')')
-              print('')
-
-              conflict.resolved = true
-            end
+            changes[type][tostring(id)] = nil
+            removeOwn = true
+            conflict.resolved = true
+          elseif conflict.mod == mod.Name and removeOwn then
+            EZITEMS[type][tostring(id)][idx] = nil
+            removeOwn = false
           end
         end
       end
     end
   end
-
 end
 
-mod:AddCallback(
-  ModCallbacks.MC_POST_GAME_STARTED,
-  function (_)
-    parseJsonData()
-    checkConflicts()
+parseJsonData()
+checkConflicts()
 
-    if EID then
-      updateEid()
-    end
+if EID then
+  updateEid()
+end
 
-    if Encyclopedia then
-      updateEncyclopedia()
-    end
+updateNames()
 
-    updateNames()
-  end
-)
+if Encyclopedia then
+  updateEncyclopedia()
+end

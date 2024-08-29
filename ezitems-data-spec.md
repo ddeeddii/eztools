@@ -61,3 +61,5 @@ The value of each item is an object with the following fields (with the exceptio
 Card data contains the following additional field:
 
 - `type`: The type of the origin card. Can be one of the following: `"card"`, `"rune"`, `"soul"`. This is done for [Encyclopedia](https://steamcommunity.com/workshop/filedetails/?id=2376005362) support
+
+Pill data's `description` field is used as the pill's in-game name, this is done to add compatibility with [External Item Descriptions](https://steamcommunity.com/sharedfiles/filedetails/?id=836319872) because EID uses the `PillColor` to identify pills, whereas EzItems uses `PillEffect`. It is usually very difficult to get a `PillColor` using a pill's `PillEffect` so EzItems uses a different approach - instead of checking the `PillColor`, it checks the `Name` of a pill and if it matches the description, it is considered to be the same pill.

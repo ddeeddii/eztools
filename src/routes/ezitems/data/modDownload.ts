@@ -20,6 +20,7 @@ import {
   ItemData,
   ItemDb,
   ItemType,
+  PillDb,
   TrinketDb,
   type ExportCard,
   type ExportData,
@@ -105,7 +106,12 @@ export function processData(config: Config, itemData: Array<Item>) {
         description: item.description,
         type: getExportPocketItemSubType(item)
       }
-    } else {
+    } else if (item.type === ItemType.Pill) {
+      exportItem = {
+        name: item.name,
+        description: item.useCustomOrigin ? item.originItemId : PillDb[item.originItemId as keyof typeof PillDb].name
+      }
+    } else{
       exportItem = {
         name: item.name,
         description: item.description

@@ -21,15 +21,10 @@ For example, if you wanted to change the name of "The Sad Onion", the origin ite
 
 # Mod Templates
 
-## What features does the REPENTOGON template add?
-
-- Partial support for pocket items - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed (External Item Descriptions is not supported for pills)
-- Built-in mod conflict notifier - if a mod is installed that changes the same item, a warning will be shown in the console
-
 ## How are the mod templates different?
 
 - `Vanilla`: Supports items and trinkets. Works in the vanilla game.
-- `REPENTOGON`: Supports items, trinkets and partially supports pocket items (pills, cards, runes, souls, etc.). Also has a built-in mod conflict notifier. **Requires the user to have [REPENTOGON](https://repentogon.com/) installed**.
+- `REPENTOGON`: Supports items, trinkets and partially supports pocket items (pills, cards, runes, souls, etc.). **Requires the user to have [REPENTOGON](https://repentogon.com/) installed**.
 
 ## Which one should I use?
 
@@ -38,12 +33,19 @@ It's mostly up to personal preference.
 - `REPENTOGON` is better because it has more features
 - `Vanilla` is better because it will always work, regardless of whether the player has REPENTOGON installed or not
 
+## What is the conflict notifier?
+
+The conflict notifier is a built-in feature that will notify you if there exists a conflict between two EzItems mods (for example when two or more mods try to change the same item).
+
+This would result in a race condition which could be unpredictable. To solve this, the conflict notifier will show a warning in the console informing you of the conflict and how it has been "resolved".
+
+The conflict between two items is "resolved" by using the item which was edited by the mod with higher priority (the one that loads first) - this is because the mod with the higher priority will always load the sprite for the item (if the sprite is changed). This is done in order to avoid a situation in which an item has mod A's name and description but mod B's sprite.
+
 # REPENTOGON Support
 
 ## What features does the REPENTOGON template add?
 
-- **Partial support for pocket items** - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed (External Item Descriptions is not supported for pills)
-- **Built-in mod conflict notifier** - if a mod is installed that changes the same item, a warning will be shown to the user
+- **Partial support for pocket items** - cards, runes, souls can have their names and descriptions changed (not sprites). Pills can only have their name changed
 - **More frequent updates** - REPENTOGON is constantly updated, unlike the vanilla game. Maintaining it takes priority over the `Vanilla` template.
 
 ## Why can't I change sprites of pocket items?

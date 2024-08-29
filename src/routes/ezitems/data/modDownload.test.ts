@@ -137,7 +137,7 @@ describe('processData', () => {
       pills: {
         '1': {
           name: 'example pill',
-          description: 'lorem ipsum',
+          description: 'Bad Trip',
         }
       }
     })
