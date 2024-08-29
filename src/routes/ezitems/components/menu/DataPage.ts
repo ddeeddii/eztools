@@ -238,5 +238,5 @@ export function finishLoadingModData(importedItemData: Array<Item>) {
   syncSearchableItems(get(ItemData))
 
   toast.success(`Loaded ${importedItemData.length} item(s) from mod successfully!`)
-  logger.debug('imported item data', importedItemData)
+  logger.debug('imported mod item data', importedItemData)
 }

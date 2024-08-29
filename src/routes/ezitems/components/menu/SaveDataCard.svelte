@@ -5,6 +5,8 @@
   import { db, type StoredData } from '$ezitems/data/savedDataManager.js'
   import { showAlertDialog } from '@/components/ui/global-alert-dialog/AlertDialog.js'
   import { ItemData, syncSearchableItems } from '$ezitems/data/dataManager.js'
+  import { logger } from '@/logger'
+  import { toast } from 'svelte-sonner'
   export let data: StoredData
 
   async function deleteData() {
@@ -15,6 +17,9 @@
     // ItemData and SearchableItems must be kept in sync
     syncSearchableItems(data.items)
     $ItemData = data.items
+
+    toast.success(`Loaded ${data.items.length} item(s) from saved data successfully!`)
+    logger.debug('loaded data from saved data', data)
   }
 </script>
 
