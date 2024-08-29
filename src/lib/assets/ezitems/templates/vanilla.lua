@@ -110,7 +110,7 @@ local function checkConflicts()
           if conflict.mod ~= mod.Name then
             print('')
             print('[ ' .. tostring(mod.Name) .. ' ]')
-            print('[ EzTools Conflict ] Item with id "' .. tostring(id) .. '" (name: "' .. itemData.name .. '") is already in use by mod "' .. conflict.mod .. '"')
+            print('[ EzTools Conflict ] Item (type ' .. type .. ') with id "' .. tostring(id) .. '" (name: "' .. itemData.name .. '") is already in use by mod "' .. conflict.mod .. '"')
             print('[ EzTools Conflict ] Mod "' .. conflict.mod .. '" has higher priority, so "' .. mod.Name .. '"\'s item will not be loaded')
             print('[ EzTools Conflict ] Summary: (' .. itemData.name .. ') -> (' .. conflict.name .. ')')
             print('')
