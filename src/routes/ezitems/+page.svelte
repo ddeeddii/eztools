@@ -5,7 +5,7 @@
   import AlertDialog from '@/components/ui/global-alert-dialog/AlertDialog.svelte'
   import ItemManager from './components/ItemManager.svelte'
   import Menu from './components/Menu.svelte'
-  import { ItemData, ItemType, SearchableItems } from './data/dataManager'
+  import { ItemData, ItemType, itemTypeMatchesTemplate, SearchableItems } from './data/dataManager'
   import { Toaster } from '$lib/components/ui/sonner'
   import { Config, TemplateType } from './data/configManager'
   import { getModZip } from './data/modDownload'
@@ -18,20 +18,45 @@
 
   async function downloadMod() {
     if (modName === '' || modFolderName === '') {
-      toast.error('Mod Name and Folder Name are required to export the mod')
+      toast.error('Mod could not be exported', {
+        description: 'Mod Name and Folder Name are required to export the mod'
+      })
       return
     }
 
     if ($ItemData.length === 0) {
-      toast.error('Cannot export a mod with no items')
+      toast.error('Mod could not be exported', {
+        description: 'Cannot export a mod with no items'
+      })
       return
     }
 
+    const usedItemOrigins = new Set<string>()
     for (const item of $ItemData) {
       if (item.originItemId === '' || item.type === ItemType.Unset) {
         toast.warning('Some items in your mod have unset origin items. They will not be exported.')
         break
       }
+
+      if (usedItemOrigins.has(item.originItemId)) {
+        toast.error('Mod could not be exported', {
+          description: 'Your mod contains more than one item with the same origin item id.'
+        })
+        return
+      }
+
+      if (!itemTypeMatchesTemplate(item.type, $Config)) {
+        toast.error('Mod could not be exported', {
+          description:
+            'Your mod contains items that are not supported by the selected template. Please remove these items or select a different template. For more information, check the console.'
+        })
+        logger.warning(
+          `template "${$Config.ExportTemplate}" does not support item type "${item.type}" found in item "${item.originItemId}" with custom name "${item.name}"`
+        )
+        return
+      }
+
+      usedItemOrigins.add(item.originItemId)
     }
 
     if ($Config.ExportTemplate == TemplateType.Repentogon) {

@@ -31,6 +31,7 @@ import pills from '@/assets/ezitems/pills.json'
 import type { searchItem } from '@/index.js'
 import { v4 as uuidv4, v4 } from 'uuid'
 import { isNumeric } from '@/utils.js'
+import { Config, TemplateType } from './configManager'
 
 export const ItemDb = items
 export const TrinketDb = trinkets
@@ -188,6 +189,15 @@ export interface ExportData {
   trinkets: Record<string, ExportItem>
   pills: Record<string, ExportItem>
   cards: Record<string, ExportCard>
+}
+
+export function itemTypeMatchesTemplate(type: ItemType, config: Config) {
+  // the strict equality operator doesn't work in the second check for reasons beyond explanation
+  // as such, we use the standard equality operator
+  return !(
+    (type === ItemType.PocketItem || type === ItemType.Pill) &&
+    config.ExportTemplate != TemplateType.Repentogon
+  )
 }
 
 export function getMockItem(params?: Partial<Item>): Item {

@@ -14,7 +14,8 @@
     ItemData,
     SearchableItems,
     getPocketItemSubType,
-    ItemTypeText
+    ItemTypeText,
+    itemTypeMatchesTemplate
   } from '../data/dataManager.js'
   import ArrowRight from 'lucide-svelte/icons/arrow-right'
   import Star from 'lucide-svelte/icons/star'
@@ -51,7 +52,7 @@
     if (usedItem.value.type === ItemType.Unset) {
     }
 
-    if (!itemTypeMatchesTemplate(usedItem.value.type)) {
+    if (!itemTypeMatchesTemplate(usedItem.value.type, $Config)) {
       selectedItem = getSearchableItem(item) // reset selected item
       toast.warning('Selected template does not support this item type!')
       logger.warning(
@@ -64,15 +65,6 @@
     item.originItemId = usedItem.value.id
 
     removeIncorrectItemParams()
-  }
-
-  function itemTypeMatchesTemplate(type: ItemType) {
-    // the strict equality operator doesn't work in the second check for reasons beyond explanation
-    // as such, we use the standard equality operator
-    return !(
-      (type === ItemType.PocketItem || type === ItemType.Pill) &&
-      $Config.ExportTemplate != TemplateType.Repentogon
-    )
   }
 
   $: onSelectedItemChange(selectedItem)
@@ -230,7 +222,7 @@
               </Select.Trigger>
               <Select.Content>
                 {#each ItemTypeText as type, index}
-                  <Select.Item value={index} disabled={!itemTypeMatchesTemplate(index)}
+                  <Select.Item value={index} disabled={!itemTypeMatchesTemplate(index, $Config)}
                     >{type}</Select.Item
                   >
                 {/each}
