@@ -47,6 +47,7 @@ export function processTemplate(config: Config, modName: string) {
 
   if (config.Minify.Template) {
     template = luamin.minify(template)
+    template = '-- Generated with EzTools\n-- isaac.d3d1.xyz\n' + template
   }
 
   return template
