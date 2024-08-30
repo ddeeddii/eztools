@@ -31,16 +31,20 @@
       return
     }
 
-    const usedItemOrigins = new Set<string>()
+    const usedItemOrigins: Array<[string, ItemType]> = []
     for (const item of $ItemData) {
       if (item.originItemId === '' || item.type === ItemType.Unset) {
         toast.warning('Some items in your mod have unset origin items. They will not be exported.')
         break
       }
 
-      if (usedItemOrigins.has(item.originItemId)) {
+      if (
+        usedItemOrigins.some(
+          ([originItemId, type]) => originItemId === item.originItemId && type === item.type
+        )
+      ) {
         toast.error('Mod could not be exported', {
-          description: 'Your mod contains more than one item with the same origin item id.'
+          description: 'Your mod contains more than one item with the same origin item.'
         })
         return
       }
@@ -56,7 +60,7 @@
         return
       }
 
-      usedItemOrigins.add(item.originItemId)
+      usedItemOrigins.push([item.originItemId, item.type])
     }
 
     if ($Config.ExportTemplate == TemplateType.Repentogon) {
