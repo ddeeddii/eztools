@@ -2,6 +2,12 @@
 -- isaac.d3d1.xyz
 
 local mod = RegisterMod('%modname%', 1)
+
+if not REPENTOGON then
+  print('[ EzItems | ' .. tostring(mod.Name) .. ' ] failed to load this mod. REPENTOGON is not installed.')
+  return
+end
+
 local data = include('data')
 local json = require('json')
 
