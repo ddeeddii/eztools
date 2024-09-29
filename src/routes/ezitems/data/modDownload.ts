@@ -1,4 +1,4 @@
-export const templateVersion = '1.0.0'
+export const templateVersion = '1.0.1'
 export const dataVersion = '1.0.0'
 export const webVersion = '1.0.0'
 

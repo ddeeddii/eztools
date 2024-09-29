@@ -63,7 +63,7 @@ local function parseJsonData()
         if trueId ~= -1 then
           addItem(trueId, item.name, item.description, itemType, item.type)
         else
-          print('[ EzTools | ' .. tostring(mod.Name) .. ']' .. itemType .. ' "' .. tostring(itemId) .. '" not found, skipping custom name/description...')
+          print('[ EzItems | ' .. tostring(mod.Name) .. ']' .. itemType .. ' "' .. tostring(itemId) .. '" not found, skipping custom name/description...')
         end
       else
         addItem(trueId, item.name, item.description, itemType, item.type)
@@ -104,16 +104,7 @@ local function updateEid ()
   end
 end
 
-local encyclopediaFunctions = {
-  items = Encyclopedia.UpdateItem,
-  trinkets = Encyclopedia.UpdateTrinket,
-  cards = {
-    card = Encyclopedia.UpdateCard,
-    rune = Encyclopedia.UpdateRune,
-    soul = Encyclopedia.UpdateSoul
-  },
-  pills = Encyclopedia.UpdatePill
-}
+local encyclopediaFunctions = {}
 local function updateEncyclopedia()
   for type, itemTypeData in pairs(changes) do
     for id, itemData in pairs(itemTypeData) do
@@ -174,9 +165,9 @@ local function checkConflicts()
           if conflict.mod ~= mod.Name then
             print('')
             print('[ ' .. tostring(mod.Name) .. ' ]')
-            print('[ EzTools Conflict ] Item (type "' .. type .. '") with id "' .. tostring(id) .. '" (name: "' .. itemData.name .. '") is already in use by mod "' .. conflict.mod .. '"')
-            print('[ EzTools Conflict ] Mod "' .. conflict.mod .. '" has higher priority, so "' .. mod.Name .. '"\'s item will not be loaded')
-            print('[ EzTools Conflict ] Summary: (' .. itemData.name .. ') -> (' .. conflict.name .. ')')
+            print('[ EzItems Conflict ] Item (type "' .. type .. '") with id "' .. tostring(id) .. '" (name: "' .. itemData.name .. '") is already in use by mod "' .. conflict.mod .. '"')
+            print('[ EzItems Conflict ] Mod "' .. conflict.mod .. '" has higher priority, so "' .. mod.Name .. '"\'s item will not be loaded')
+            print('[ EzItems Conflict ] Summary: (' .. itemData.name .. ') -> (' .. conflict.name .. ')')
             print('')
 
             changes[type][tostring(id)] = nil
@@ -202,5 +193,16 @@ end
 updateNames()
 
 if Encyclopedia then
+  encyclopediaFunctions = {
+    items = Encyclopedia.UpdateItem,
+    trinkets = Encyclopedia.UpdateTrinket,
+    cards = {
+      card = Encyclopedia.UpdateCard,
+      rune = Encyclopedia.UpdateRune,
+      soul = Encyclopedia.UpdateSoul
+    },
+    pills = Encyclopedia.UpdatePill
+  }
+
   updateEncyclopedia()
 end
