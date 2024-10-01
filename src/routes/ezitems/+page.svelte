@@ -8,10 +8,11 @@
   import { ItemData, ItemType, itemTypeMatchesTemplate, SearchableItems } from './data/dataManager'
   import { Toaster } from '$lib/components/ui/sonner'
   import { Config, TemplateType } from './data/configManager'
-  import { getModZip } from './data/modDownload'
+  import { fetchTemplates, getModZip } from './data/modDownload'
   import { toast } from 'svelte-sonner'
   import { showAlertDialog } from '@/components/ui/global-alert-dialog/AlertDialog'
   import { logger } from '@/logger'
+  import { onMount } from 'svelte'
 
   let modName = ''
   let modFolderName = ''
@@ -73,6 +74,10 @@
 
     await getModZip(modName, modFolderName)
   }
+
+  onMount(async () => {
+    fetchTemplates()
+  })
 </script>
 
 <svelte:head>

@@ -2,14 +2,14 @@ export const templateVersion = '1.0.1'
 export const dataVersion = '1.0.0'
 export const webVersion = '1.0.0'
 
-import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?raw'
-import repentogon from '$lib/assets/ezitems/templates/repentogon.lua?raw'
+import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?url'
+import repentogon from '$lib/assets/ezitems/templates/repentogon.lua?url'
 
 // note - there is nothing that can be done to avoid magic numbers
 // or at least if there is, i could not find a way to do it
 const Template: Record<TemplateType, string> = {
-  0: vanilla,
-  1: repentogon
+  0: '',
+  1: ''
 }
 
 import JSZip from 'jszip'
@@ -29,20 +29,48 @@ import {
 } from './dataManager.js'
 import luamin from 'luamin'
 import { isNumeric } from '@/utils.js'
+import { toast } from 'svelte-sonner'
+
+export async function fetchTemplates() {
+  const vanillaReq = await fetch(vanilla, {
+    cache: 'reload'
+  })
+  const vanillaTemplate = await vanillaReq.text()
+
+  const repentogonReq = await fetch(repentogon, {
+    cache: 'reload'
+  })
+  const repentogonTemplate = await repentogonReq.text()
+
+  if (
+    !vanillaTemplate.startsWith('-- Generated with EzTools') ||
+    !repentogonTemplate.startsWith('-- Generated with EzTools')
+  ) {
+    toast.error('FATAL ERROR! Failed to load templates')
+    return
+  }
+
+  Template[0] = vanillaTemplate
+  Template[1] = repentogonTemplate
+  toast.success('Templates loaded successfully')
+}
 
 export async function getModZip(modName: string, modFolderName: string) {
   const config = get(Config)
   const mainZip = new JSZip()
 
   mainZip.file(`${modFolderName}/main.lua`, processTemplate(config, modName))
-  mainZip.file(`${modFolderName}/data.lua`, `return '${JSON.stringify(processData(config, get(ItemData)))}'`)
+  mainZip.file(
+    `${modFolderName}/data.lua`,
+    `return '${JSON.stringify(processData(config, get(ItemData)))}'`
+  )
   await saveSprites(get(ItemData), mainZip, modFolderName)
 
   saveBlob(await mainZip.generateAsync({ type: 'blob' }), `${modName}.zip`)
 }
 
-export function processTemplate(config: Config, modName: string) {
-  let template = Template[config.ExportTemplate]
+export function processTemplate(config: Config, modName: string, templateOverride?: string) {
+  let template = templateOverride ?? Template[config.ExportTemplate]
   template = template.replace('%modname%', modName)
 
   if (config.Minify.Template) {
@@ -110,9 +138,11 @@ export function processData(config: Config, itemData: Array<Item>) {
     } else if (item.type === ItemType.Pill) {
       exportItem = {
         name: item.name,
-        description: item.useCustomOrigin ? item.originItemId : PillDb[item.originItemId as keyof typeof PillDb].name
+        description: item.useCustomOrigin
+          ? item.originItemId
+          : PillDb[item.originItemId as keyof typeof PillDb].name
       }
-    } else{
+    } else {
       exportItem = {
         name: item.name,
         description: item.description
@@ -128,10 +158,10 @@ export function processData(config: Config, itemData: Array<Item>) {
 
 async function saveSprites(itemData: Array<Item>, zip: JSZip, modFolderName: string) {
   for (const item of itemData) {
-    if (!isNumeric(item.originItemId)){
+    if (!isNumeric(item.originItemId)) {
       continue
     } // ensure item doesn't use custom origin
-    
+
     if (item.sprite === null) {
       continue
     }

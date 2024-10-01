@@ -3,9 +3,12 @@ import { DefaultConfig, TemplateType } from './configManager.js'
 import { dataVersion, getExportPocketItemSubType, processData, processTemplate, templateVersion, webVersion } from './modDownload.js'
 import { getMockItem, ItemType } from './dataManager.js'
 
+import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?raw'
+import repentogon from '$lib/assets/ezitems/templates/repentogon.lua?raw'
+
 describe('processTemplate', () => {
   test('vanilla template renames modname', () => {
-    const template = processTemplate(DefaultConfig, 'example mod name')
+    const template = processTemplate(DefaultConfig, 'example mod name', vanilla)
     expect(template).toContain('example mod name')
   })
 
@@ -13,18 +16,18 @@ describe('processTemplate', () => {
     const template = processTemplate({
       ...DefaultConfig,
       ExportTemplate: TemplateType.Repentogon
-    }, 'example mod name')
+    }, 'example mod name', repentogon)
     expect(template).toContain('example mod name')
   })
 
   test('template minifies correctly', () => {
-    const defaultTemplate = processTemplate(DefaultConfig, 'example mod name')
+    const defaultTemplate = processTemplate(DefaultConfig, 'example mod name', vanilla)
     const minifiedTemplate = processTemplate({
       ...DefaultConfig,
       Minify: {
         Template: true
       }
-    }, 'example mod name')
+    }, 'example mod name', vanilla)
 
     expect(defaultTemplate).length.greaterThan(minifiedTemplate.length)
   })
