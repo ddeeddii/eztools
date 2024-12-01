@@ -77,6 +77,18 @@
 
   onMount(async () => {
     fetchTemplates()
+
+    const noticeViewed = localStorage.getItem('rplus-temporary-issue-notice-viewed')
+    if (!noticeViewed) {
+      showAlertDialog(
+        () => {
+          localStorage.setItem('rplus-temporary-issue-notice-viewed', 'true')
+        },
+        'Due to issues in the Repentance+ modding API, EzItems does not currently support it.\n\nREPENTOGON hasn\'t been updated yet for REPENTANCE+ (thus eliminating the REPENTOGON template) and the primary function EzItems\' Vanilla template relies on to display item text is currently broken with no workaround available.\nOnly thing to be done right now is to remain patient and wait for Isaac developers to fix up the modding API.\n\nUpon pressing "Confirm" this message will not show up again.',
+        'Confirm',
+        'ATTENTION'
+      )
+    }
   })
 </script>
 
