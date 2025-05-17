@@ -79,7 +79,16 @@ describe('getExportPocketItemSubType', () => {
 describe('processData', () => {
   test('metadata is correct', () => {
     const data = processData(DefaultConfig, [])
-    expect(data).toMatchObject({
+    if (!data) {
+      throw new Error('Data is undefined')
+    }
+
+    const td = new TextDecoder('utf-8')
+    const text = td.decode(data)
+
+    const fixedData = text.slice(8, -1)
+    const parsedData = JSON.parse(fixedData)
+    expect(parsedData).toMatchObject({
       metadata: {
         templateType: 'vanilla',
         templateVersion: templateVersion,
@@ -100,8 +109,17 @@ describe('processData', () => {
     ]
 
     const data = processData(DefaultConfig, items)
+        if (!data) {
+      throw new Error('Data is undefined')
+    }
 
-    expect(data).toMatchObject({
+    const td = new TextDecoder('utf-8')
+    const text = td.decode(data)
+
+    const fixedData = text.slice(8, -1)
+    const parsedData = JSON.parse(fixedData)
+
+    expect(parsedData).toMatchObject({
       cards: {
         '1': {
           name: 'example',
@@ -137,8 +155,17 @@ describe('processData', () => {
     ]
 
     const data = processData(DefaultConfig, items)
+    if (!data) {
+      throw new Error('Data is undefined')
+    }
 
-    expect(data).toMatchObject({
+    const td = new TextDecoder('utf-8')
+    const text = td.decode(data)
+
+    const fixedData = text.slice(8, -1)
+    const parsedData = JSON.parse(fixedData)
+
+    expect(parsedData).toMatchObject({
       items: {
         '1': {
           name: 'example item',
@@ -174,8 +201,17 @@ describe('processData', () => {
     ]
 
     const data = processData(DefaultConfig, items)
+    if (!data) {
+      throw new Error('Data is undefined')
+    }
 
-    expect(data).toMatchObject({
+    const td = new TextDecoder('utf-8')
+    const text = td.decode(data)
+
+    const fixedData = text.slice(8, -1)
+    const parsedData = JSON.parse(fixedData)
+    
+    expect(parsedData).toMatchObject({
       items: {
         'example custom origin': {
           name: 'example item',
