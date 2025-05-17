@@ -162,6 +162,29 @@ function loadItemTypeFromMod(
   }
 }
 
+// when exporting, we escape single quotes because we use single quotes in lua
+// this is actually incorrect syntax because they don't need to be escaped
+// therefore, we must remove the backslashes before we parse the data
+function fixSingleQuotesInvalidEscape(str: string) {
+  const te = new TextEncoder()
+  const data = te.encode(str)
+
+  const result: number[] = []
+  let i = 0
+  while (i < data.length) {
+    if (data[i] === 0x5c && data[i + 1] === 0x27) { // \'
+      result.push(0x27) // '
+      i += 2
+    } else {
+      result.push(data[i])
+      i += 1
+    }
+  }
+
+  const td = new TextDecoder()
+  return td.decode(new Uint8Array(result))
+}
+
 function loadItems(
   rawData: string,
   importedItemData: Array<Item>,
@@ -176,9 +199,10 @@ function loadItems(
   }
 
   const data = match[0].slice(1, -1) // this removes the quotes
+  const fixedData = fixSingleQuotesInvalidEscape(data) // read the comment above this function
 
   try {
-    const parsedData = JSON.parse(data) as ExportData
+    const parsedData = JSON.parse(fixedData) as ExportData
 
     loadItemTypeFromMod(ItemType.Item, parsedData.items, importedItemData, importedSprites)
     loadItemTypeFromMod(ItemType.Trinket, parsedData.trinkets, importedItemData, importedSprites)

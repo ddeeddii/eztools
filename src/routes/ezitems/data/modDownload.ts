@@ -1,5 +1,5 @@
 export const templateVersion = '1.0.1'
-export const dataVersion = '1.0.0'
+export const dataVersion = '1.0.1'
 export const webVersion = '1.0.0'
 
 import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?url'
@@ -59,11 +59,13 @@ export async function getModZip(modName: string, modFolderName: string) {
   const config = get(Config)
   const mainZip = new JSZip()
 
+  const dataBytes = processData(config, get(ItemData))
+  if (!dataBytes) {
+    return
+  }
+
   mainZip.file(`${modFolderName}/main.lua`, processTemplate(config, modName))
-  mainZip.file(
-    `${modFolderName}/data.lua`,
-    `return '${JSON.stringify(processData(config, get(ItemData)))}'`
-  )
+  mainZip.file(`${modFolderName}/data.lua`, dataBytes)
   await saveSprites(get(ItemData), mainZip, modFolderName)
 
   saveBlob(await mainZip.generateAsync({ type: 'blob' }), `${modName}.zip`)
@@ -107,6 +109,21 @@ export function getExportPocketItemSubType(item: Item): 'card' | 'rune' | 'soul'
   return 'card'
 }
 
+export function replaceTemporaryCharacters(byteData: Uint8Array) {
+  const result: number[] = []
+  let i = 0
+  while (i < byteData.length) {
+    if (byteData[i] === 0xc2 && byteData[i + 1] === 0xb5) {
+      result.push(0x5c, 0x27) // \'
+      i += 2
+    } else {
+      result.push(byteData[i])
+      i += 1
+    }
+  }
+  return new Uint8Array(result)
+}
+
 export function processData(config: Config, itemData: Array<Item>) {
   const exportData: ExportData = {
     metadata: {
@@ -122,6 +139,12 @@ export function processData(config: Config, itemData: Array<Item>) {
     pills: {}
   }
 
+  const rawData = JSON.stringify(itemData)
+  if (rawData.includes('µ')) {
+    toast.error('Item data contains invalid character "µ".\nPlease remove it and try again.')
+    return false
+  }
+
   for (const [, item] of Object.entries(itemData)) {
     if (item.type === ItemType.Unset) {
       continue
@@ -129,23 +152,32 @@ export function processData(config: Config, itemData: Array<Item>) {
 
     let exportItem = {} as ExportItem | ExportCard
 
+    // since data.lua uses single quotes to return the data string
+    // every single quote must be escaped, otherwise it breaks
+    // and since JSON.stringify() will replace "\" with "\\"
+    // the actual data.lua byte data needs to be used written, instead of just the string
+    // we actually use temporary characters to note where the backslashes need to be placed
+    // "µ" actually takes 2 bytes which we will later replace with " \' "
+    const itemName = item.name.replaceAll("'", `µ`)
+    const itemDescription = item.description.replace("'", `µ`)
+
     if (item.type === ItemType.PocketItem) {
       exportItem = {
-        name: item.name,
-        description: item.description,
+        name: itemName,
+        description: itemDescription,
         type: getExportPocketItemSubType(item)
       }
     } else if (item.type === ItemType.Pill) {
       exportItem = {
-        name: item.name,
+        name: itemName,
         description: item.useCustomOrigin
           ? item.originItemId
           : PillDb[item.originItemId as keyof typeof PillDb].name
       }
     } else {
       exportItem = {
-        name: item.name,
-        description: item.description
+        name: itemName,
+        description: itemDescription
       }
     }
 
@@ -153,7 +185,13 @@ export function processData(config: Config, itemData: Array<Item>) {
     exportData[key][item.originItemId] = exportItem
   }
 
-  return exportData
+  const te = new TextEncoder()
+  const byteData = te.encode(`return '${JSON.stringify(exportData)}'`)
+  // yes, this is slightly hacky and inefficient
+  // but it does work
+  const escapedByteData = replaceTemporaryCharacters(byteData)
+
+  return escapedByteData
 }
 
 async function saveSprites(itemData: Array<Item>, zip: JSZip, modFolderName: string) {
