@@ -1,6 +1,6 @@
 export const templateVersion = '1.0.1'
 export const dataVersion = '1.0.1'
-export const webVersion = '1.0.0'
+export const webVersion = '1.0.1'
 
 import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?url'
 import repentogon from '$lib/assets/ezitems/templates/repentogon.lua?url'
@@ -73,7 +73,8 @@ export async function getModZip(modName: string, modFolderName: string) {
 
 export function processTemplate(config: Config, modName: string, templateOverride?: string) {
   let template = templateOverride ?? Template[config.ExportTemplate]
-  template = template.replace('%modname%', modName)
+  const escapedModName = modName.replace(/'/g, "\\'")
+  template = template.replace('%modname%', escapedModName)
 
   if (config.Minify.Template) {
     template = luamin.minify(template)
@@ -155,7 +156,7 @@ export function processData(config: Config, itemData: Array<Item>) {
     // since data.lua uses single quotes to return the data string
     // every single quote must be escaped, otherwise it breaks
     // and since JSON.stringify() will replace "\" with "\\"
-    // the actual data.lua byte data needs to be used written, instead of just the string
+    // the actual data.lua byte data needs to be used, instead of just the string
     // we actually use temporary characters to note where the backslashes need to be placed
     // "µ" actually takes 2 bytes which we will later replace with " \' "
     const itemName = item.name.replaceAll("'", `µ`)

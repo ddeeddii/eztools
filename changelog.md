@@ -12,3 +12,7 @@ fix: properly escape single quotes in `data.lua`
 before, using single quotes would completely break the file
 
 # webVersion
+
+## 1.0.1
+
+fix: properly escape `modname` in the templates
