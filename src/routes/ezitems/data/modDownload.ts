@@ -1,6 +1,6 @@
 export const templateVersion = '1.0.1'
 export const dataVersion = '1.0.1'
-export const webVersion = '1.0.1'
+export const webVersion = '1.0.2'
 
 import vanilla from '$lib/assets/ezitems/templates/vanilla.lua?url'
 import repentogon from '$lib/assets/ezitems/templates/repentogon.lua?url'
