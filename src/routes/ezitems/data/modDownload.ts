@@ -160,7 +160,7 @@ export function processData(config: Config, itemData: Array<Item>) {
     // we actually use temporary characters to note where the backslashes need to be placed
     // "µ" actually takes 2 bytes which we will later replace with " \' "
     const itemName = item.name.replaceAll("'", `µ`)
-    const itemDescription = item.description.replace("'", `µ`)
+    const itemDescription = item.description.replaceAll("'", `µ`)
 
     if (item.type === ItemType.PocketItem) {
       exportItem = {
