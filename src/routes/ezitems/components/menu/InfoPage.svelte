@@ -7,6 +7,7 @@
   import InfoAccordion from './InfoAccordion.svelte'
 
   import { getParsedFaq } from './InfoPage.js'
+  import { templateVersion, dataVersion, webVersion } from '../../data/modDownload.js'
 
   const faqData = getParsedFaq()
 </script>
@@ -28,6 +29,28 @@
 </div>
 
 <div class="flex flex-col gap-4">
+  <Card.Root>
+    <Card.Header class="flex items-center">
+      <Card.Title class="text-xl">Loaded versions</Card.Title>
+    </Card.Header>
+    <Card.Content>
+      <div class="flex flex-row justify-around gap-1">
+        <div class="flex flex-col items-center">
+          <span class="font-semibold">Template</span>
+          <span>{templateVersion}</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-semibold">Data</span>
+          <span>{dataVersion}</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-semibold">Web</span>
+          <span>{webVersion}</span>
+        </div>
+      </div>
+    </Card.Content>
+  </Card.Root>
+
   <span class="flex justify-center text-2xl font-semibold">Frequently Asked Questions</span>
 
   {#each faqData as section}
